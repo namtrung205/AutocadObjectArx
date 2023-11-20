@@ -62,47 +62,194 @@ public:
 	
 	static void utcMyGroup_ADDENTRY()
 	{
-		/*Prompt the user for an employee name(acedGetString()).
-		- Get the Named Objects Dictionary from the current working database(AcDbDictionary, AcDbDatabase::getNamedObjectsDictionary()).
-		- Check if the "ASDK_EMPLOYEE_DICTIONARY" is already in the NOD(AcDbDictionary::getAt()).
-		- If the "ASDK_EMPLOYEE_DICTIONARY" base level is not in the NOD, then create a new
-		- AcDbDictionary with key "ASDK_EMPLOYEE_DICTIONARY" and add it to the named objects 
-		dictionary(new AcDbDictionary, AcDbDictionary::setAt()).
-		- Check if the name of the employee is already in the "ASDK_EMPLOYEE_DICTIONARY" dictionary.
-		- If the employee dictionary is not present, then create a new AcDbXrecordand add it to
-		the "ASDK_EMPLOYEE_DICTIONARY" (AcDbDictionary::setAt()).
-		- Don't forget to close the Named Objects Dictionary, the "ASDK_EMPLOYEE_DICTIONARY" and the Xrecord if created. 
-		- Using AcDbXrecord requires the include file <dbxrecrd.h>.Though you don't have to include it, 
-		as explained earlier in ObjectARX Headers. */
+		// Add your code for command AsdkStep04._ADDENTRY here
+		//  When this command invoked at the first time
+		//  it creates two objects: an AcDbDictionary object in the named
+		//  objects dictionary (NOD) and an empty AcDbXrecord object to represent
+		//  an individual entry. The XRecord will be replaced in a later lab by a
+		//  custom object AsdkEmployeeDetails.
+		//  Later invokations of the command just adds new XRecords to this
+		//  dictionary.
+		//  Storing these entries in the NOD will enable us to query all
+		//  employees in the db quickly without iterating through all
+		//  AcDbBlockTableRecords in the database.
 
-		//Get string from User
-		TCHAR employeeName[256] = { 0 };
-		acedGetString(NULL, _T("\nEnter application name: "), employeeName);
-		
-		AcDbDatabase* pDb = acdbHostApplicationServices()->workingDatabase();
-		if (pDb != NULL)
+		// Prompt the use for the an id
+		TCHAR strID[133];
+		if (acedGetString(0, _T("Enter employee name: "), strID) != RTNORM)
+			return;
+
+		// Get the named object dictionary
+		AcDbDictionary* pNOD;
+		if (acdbHostApplicationServices()->workingDatabase()->getNamedObjectsDictionary(pNOD, AcDb::kForRead) != Acad::eOk)
 		{
+			acutPrintf(_T("\nUnable to open the NOD! Aborting..."));
+			return;
+		}
 
-			AcDbDictionary* pDict;
-			pDb->getNamedObjectsDictionary(pDict, AcDb::kForRead);
-
-			if(pDict->has(_T("ASDK_EMPLOYEE_DICTIONARY")))
-			{
-				AcDbObject* entryObj;
-				pDict->getAt(_T("ASDK_EMPLOYEE_DICTIONARY"), entryObj);
+		// See if our dictionary is already there
+		AcDbObjectId idO;
+		AcDbDictionary* pEmployeeDict = NULL;
+		if (pNOD->getAt(_T("ASDK_EMPLOYEE_DICTIONARY"), idO) == Acad::eKeyNotFound) {
+			// Create it if not
+			if (pNOD->upgradeOpen() != Acad::eOk) {
+				acutPrintf(_T("\nCannot open NOD for Write!"));
+				pNOD->close();
+				return;
 			}
-			else
-			{
-				AcDbObject* newValue;
-				AcDbObjectId retObjId;
-				pDict->setAt(_T("ASDK_EMPLOYEE_DICTIONARY"), newValue, retObjId);
-
-				pDict
-
-
+			pEmployeeDict = new AcDbDictionary;
+			// Add it to the NOD
+			if (pNOD->setAt(_T("ASDK_EMPLOYEE_DICTIONARY"), pEmployeeDict, idO) != Acad::eOk) {
+				// We are really unlucky
+				acutPrintf(_T("\nCannot add our dictionary in the AutoCAD NOD!"));
+				// Clean-up memory and abort
+				delete pEmployeeDict;
+				pNOD->close();
+				return;
 			}
 		}
+		else {
+			// Get it for write if it is already there
+			AcDbObject* pO;
+			if (acdbOpenAcDbObject(pO, idO, AcDb::kForWrite) != Acad::eOk) {
+				acutPrintf(_T("\nCannot open the object for write."));
+				pNOD->close();
+				return;
+			}
+			// Check if someone has else has created an entry with our name
+			// that is not a dictionary. This should never happen as long as
+			// I use the registered developer RDS prefix.
+			if ((pEmployeeDict = AcDbDictionary::cast(pO)) == NULL) {
+				acutPrintf(_T("\nEntry found in the NOD, but it is not a dictionary."));
+				pO->close();
+				pNOD->close();
+				return;
+			}
+		}
+		pNOD->close();
+		// Check if a record with this key is already there
+		if (pEmployeeDict->getAt(strID, idO) == Acad::eOk) {
+			acutPrintf(_T("\nThis employee is already registered."));
+			pEmployeeDict->close();
+			return;
+		}
+		// Let's add the new record. Append an empty xrecord.
+		AcDbXrecord* pEmployeeEntry = new AcDbXrecord;
+		if (pEmployeeDict->setAt(strID, pEmployeeEntry, idO) != Acad::eOk) {
+			acutPrintf(_T("\nFailed to add the new employee in the dictionary."));
+			delete pEmployeeEntry;
+			pEmployeeDict->close();
+			return;
+		}
+		pEmployeeEntry->close();
+		pEmployeeDict->close();
 	}
+
+
+	static void utcMyGroup_LISTENTRIES(void)
+	{
+		// Add your code for command AsdkStep04._LISTENTRIES here
+		// Get the named object dictionary
+		AcDbDictionary* pNOD;
+		if (acdbHostApplicationServices()->workingDatabase()->getNamedObjectsDictionary(pNOD, AcDb::kForRead) != Acad::eOk) {
+			acutPrintf(_T("\nUnable to open the NOD! Aborting..."));
+			return;
+		}
+		// See if our dictionary is already there
+		AcDbObjectId idO;
+		AcDbObject* pO;
+		if (pNOD->getAt(_T("ASDK_EMPLOYEE_DICTIONARY"), idO) != Acad::eOk) {
+			acutPrintf(_T("\nNo dictionary, no entry to remove..."));
+			pNOD->close();
+			return;
+		}
+		// Get employee dictionary for read
+		if (acdbOpenAcDbObject(pO, idO, AcDb::kForRead) != Acad::eOk) {
+			acutPrintf(_T("\nCannot open the object for write."));
+			pNOD->close();
+			return;
+		}
+		// Check if someone has else has created an entry with our name
+		// that is not a dictionary. This should never happen as long as
+		// I use the registered developer RDS prefix.
+		AcDbDictionary* pEmployeeDict;
+		if ((pEmployeeDict = AcDbDictionary::cast(pO)) == NULL) {
+			acutPrintf(_T("\nEntry found in the NOD, but it is not a dictionary."));
+			pO->close();
+			pNOD->close();
+			return;
+		}
+		pNOD->close();
+
+		AcDbDictionaryIterator* pIter;
+		if ((pIter = pEmployeeDict->newIterator()) != NULL) {
+			for (; !pIter->done(); pIter->next()) {
+				// Print name
+				acutPrintf(_T("*Employee: %s\n"), pIter->name());
+			}
+			delete pIter;
+		}
+
+		pEmployeeDict->close();
+	}
+
+	static void utcMyGroup_REMOVEENTRY(void)
+	{
+		// Add your code for command AsdkStep04._REMOVEENTRY here
+		// Prompt the user for the an employee name
+		TCHAR strID[133];
+		if (acedGetString(0, _T("Enter employee name: "), strID) != RTNORM)
+			return;
+		// Get the named object dictionary
+		AcDbDictionary* pNOD;
+		if (acdbHostApplicationServices()->workingDatabase()->getNamedObjectsDictionary(pNOD, AcDb::kForRead) != Acad::eOk) {
+			acutPrintf(_T("\nUnable to open the NOD! Aborting..."));
+			return;
+		}
+		// See if our dictionary is already there
+		AcDbObjectId idO;
+		AcDbObject* pO;
+		if (pNOD->getAt(_T("ASDK_EMPLOYEE_DICTIONARY"), idO) != Acad::eOk) {
+			acutPrintf(_T("\nNo dictionary, no entry to remove..."));
+			pNOD->close();
+			return;
+		}
+		// Get employee dictionary for read
+		if (acdbOpenAcDbObject(pO, idO, AcDb::kForRead) != Acad::eOk) {
+			acutPrintf(_T("\nCannot open the object for write."));
+			pNOD->close();
+			return;
+		}
+		// Check if someone has else has created an entry with our name
+		// that is not a dictionary. This should never happen as long as
+		// I use the registered developer RDS prefix.
+		AcDbDictionary* pEmployeeDict;
+		if ((pEmployeeDict = AcDbDictionary::cast(pO)) == NULL) {
+			acutPrintf(_T("\nEntry found in the NOD, but it is not a dictionary."));
+			pO->close();
+			pNOD->close();
+			return;
+		}
+		pNOD->close();
+		// Check if a record with this key is there
+		if (pEmployeeDict->getAt(strID, idO) != Acad::eOk) {
+			acutPrintf(_T("\nEntry not found."));
+			pEmployeeDict->close();
+			return;
+		}
+		pEmployeeDict->close();
+		// Get it for write 
+		if (acdbOpenAcDbObject(pO, idO, AcDb::kForWrite) != Acad::eOk) {
+			acutPrintf(_T("\nEntry cannot be opened for write."));
+			return;
+		}
+		// And erase it
+		pO->erase();
+		pO->close();
+	}
+
+
+
 };
 
 
@@ -110,5 +257,7 @@ public:
 IMPLEMENT_ARX_ENTRYPOINT(CStep04XrecordNODApp)
 
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep04XrecordNODApp, utcMyGroup, _ADDENTRY, _ADDENTRY, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep04XrecordNODApp, utcMyGroup, _LISTENTRIES, _LISTENTRIES, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep04XrecordNODApp, utcMyGroup, _REMOVEENTRY, _REMOVEENTRY, ACRX_CMD_MODAL, NULL)
 
 
