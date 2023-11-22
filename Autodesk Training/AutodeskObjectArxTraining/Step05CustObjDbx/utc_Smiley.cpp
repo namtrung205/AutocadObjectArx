@@ -235,7 +235,15 @@ Acad::ErrorStatus utc_Smiley::dxfInFields (AcDbDxfFiler *pFiler) {
 Adesk::Boolean utc_Smiley::subWorldDraw (AcGiWorldDraw *mode) 
 {
 	assertReadEnabled () ;
-	return (AcDbEntity::subWorldDraw (mode)) ;
+	AcDbCircle* face = new AcDbCircle(center(), AcGeVector3d(0, 0, 1), 20);
+	bool ret = face->worldDraw(mode);
+
+	AcDb3dSolid* pCol = new AcDb3dSolid();
+	pCol->createSphere(10);
+	ret = pCol->worldDraw(mode);
+
+
+	return ret;
 }
 
 

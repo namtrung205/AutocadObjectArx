@@ -136,7 +136,7 @@ protected:
 	virtual Adesk::UInt32 subSetAttributes (AcGiDrawableTraits *traits) ;
 
 
-
+public:
 
 //
 // Smiley property functions

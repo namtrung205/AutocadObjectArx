@@ -26,6 +26,9 @@
 #include "resource.h"
 #include "utc_EmployeeDetails.h"
 #include "utc_customEntityStep6.h"
+#include "utc_Smiley.h"
+
+
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("utc")
 
@@ -355,6 +358,46 @@ public:
 		cusEnt6->close();
 	}
 
+
+
+	static void utcMyGroup_CREATESMILEY()
+	{
+		// Put your command code here
+		//Get Point
+		ads_point pt;
+		ads_point pt_res;
+
+		acedGetPoint(pt, _T("Select point..."), pt_res);
+		AcGePoint3d cenPt = asPnt3d(pt_res);
+
+		utc_Smiley* pSmile = new utc_Smiley();
+		pSmile->setCenter(cenPt);
+
+
+		//Add entity to model space
+		{
+			//Check name exists
+			AcDbDatabase* pDb = acdbHostApplicationServices()->workingDatabase();
+			if (pDb != NULL)
+			{
+				AcDbObjectId modelId;
+				modelId = acdbSymUtil()->blockModelSpaceId(pDb);
+				AcDbBlockTableRecord* pBlockTableRecordModel;
+
+				acdbOpenAcDbObject((AcDbObject*&)pBlockTableRecordModel, modelId, AcDb::kForRead);
+
+				if (pBlockTableRecordModel != NULL)
+				{
+					pBlockTableRecordModel->upgradeOpen();
+					pBlockTableRecordModel->appendAcDbEntity(pSmile);
+					pBlockTableRecordModel->close();
+				}
+			}
+
+		}
+		pSmile->close();
+	}
+
 } ;
 
 //-----------------------------------------------------------------------------
@@ -364,5 +407,6 @@ ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _ADDDETAIL, _ADDDETA
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _LISTDETAILS, _LISTDETAILS, ACRX_CMD_MODAL, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _REMOVEDETAIL, _REMOVEDETAIL, ACRX_CMD_MODAL, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _CREATEEMPLOYEE, _CREATEEMPLOYEE, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _CREATESMILEY, _CREATESMILEY, ACRX_CMD_MODAL, NULL)
 
 

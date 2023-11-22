@@ -19,10 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step5CustObjArx", "Step5Cus
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Step06CustomEntity", "Step06CustomEntity", "{311E1FDF-E7B0-4650-9E0D-29AAE20AC577}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step06CustomEntityDBX", "Step06CustomEntity\Step06CustomEntity.vcxproj", "{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step06CustomEntityARX", "Step06CustomEntityARX\Step06CustomEntityARX\Step06CustomEntityARX.vcxproj", "{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -69,18 +65,6 @@ Global
 		{49F0230E-1D0B-4FBB-A946-FB7B6341D869}.Release|x64.ActiveCfg = Release|x64
 		{49F0230E-1D0B-4FBB-A946-FB7B6341D869}.Release|x64.Build.0 = Release|x64
 		{49F0230E-1D0B-4FBB-A946-FB7B6341D869}.Release|x86.ActiveCfg = Release|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Debug|x64.ActiveCfg = Debug|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Debug|x64.Build.0 = Debug|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Debug|x86.ActiveCfg = Debug|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Release|x64.ActiveCfg = Release|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Release|x64.Build.0 = Release|x64
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B}.Release|x86.ActiveCfg = Release|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Debug|x64.ActiveCfg = Debug|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Debug|x64.Build.0 = Debug|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Debug|x86.ActiveCfg = Debug|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Release|x64.ActiveCfg = Release|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Release|x64.Build.0 = Release|x64
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,8 +72,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7324A722-772D-4D7F-B5A6-2B4AA9B84C56} = {C900626D-226E-402B-9877-504658B195E9}
 		{49F0230E-1D0B-4FBB-A946-FB7B6341D869} = {C900626D-226E-402B-9877-504658B195E9}
-		{11FDD257-D4DD-4DAA-9DFA-8CFE22515B6B} = {311E1FDF-E7B0-4650-9E0D-29AAE20AC577}
-		{AF7DC61F-E096-4CE7-B0E5-5AFBF5886804} = {311E1FDF-E7B0-4650-9E0D-29AAE20AC577}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B01D8610-62A8-4D47-9B68-0B046B041D75}
