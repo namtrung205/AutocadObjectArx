@@ -83,14 +83,16 @@
     <ClCompile Include="Step05CustObjDbx.cpp" />
     <ClCompile Include="utc_customEntityStep6.cpp" />
     <ClCompile Include="utc_EmployeeDetails.cpp" />
-    <ClCompile Include="utc_SmileFace.cpp" />
+    <ClCompile Include="utc_Smiley.cpp" />
+    <ClCompile Include="utc_Smiley_DbProperty.cpp" />
+    <ClCompile Include="utc_Smiley_DbTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="utc_customEntityStep6.h" />
     <ClInclude Include="utc_EmployeeDetails.h" />
-    <ClInclude Include="utc_SmileFace.h" />
+    <ClInclude Include="utc_Smiley.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Step05CustObjDbx.rc" />

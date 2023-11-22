@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\SmileyDB">
+      <UniqueIdentifier>{8394f119-5e35-4d72-b465-0ad0478483d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SmileyDB">
+      <UniqueIdentifier>{b5f0d748-e7e1-4be7-931e-ddde31648baf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -27,11 +33,17 @@
     <ClCompile Include="utc_EmployeeDetails.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utc_SmileFace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utc_customEntityStep6.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utc_Smiley.cpp">
+      <Filter>Source Files\SmileyDB</Filter>
+    </ClCompile>
+    <ClCompile Include="utc_Smiley_DbProperty.cpp">
+      <Filter>Source Files\SmileyDB</Filter>
+    </ClCompile>
+    <ClCompile Include="utc_Smiley_DbTransform.cpp">
+      <Filter>Source Files\SmileyDB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +56,11 @@
     <ClInclude Include="utc_EmployeeDetails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utc_SmileFace.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="utc_customEntityStep6.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utc_Smiley.h">
+      <Filter>Header Files\SmileyDB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
