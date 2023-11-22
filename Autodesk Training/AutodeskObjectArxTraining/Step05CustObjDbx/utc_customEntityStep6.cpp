@@ -65,6 +65,30 @@ Acad::ErrorStatus utc_customEntityStep6::dwgOutFields (AcDbDwgFiler *pFiler) con
 	//----- Output params
 	//.....
 
+	Adesk::Int32 nId;
+	if(iD(nId) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeInt32(nId);
+	}
+
+	Adesk::Int32 nCube;
+	if (cube(nCube) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeInt32(nCube);
+	}
+
+	TCHAR* sFirstName;
+	if (firstName(sFirstName) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeString(sFirstName);
+	}
+
+	TCHAR* sLastName;
+	if (lastName(sLastName) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeString(sLastName);
+	}
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -87,6 +111,27 @@ Acad::ErrorStatus utc_customEntityStep6::dwgInFields (AcDbDwgFiler *pFiler) {
 	//----- Read params
 	//.....
 
+	//Need to write custom data
+	Adesk::Int32 Id = 0;
+	if ((es = pFiler->readInt32(&Id)) != Acad::eOk)
+		return (es);
+	setID(Id);
+
+	Adesk::Int32 cube = 0;
+	if ((es = pFiler->readInt32(&cube)) != Acad::eOk)
+		return (es);
+	setCube(cube);
+
+	AcString firstName;
+	if ((es = pFiler->readString(firstName)) != Acad::eOk)
+		return (es);
+	setFirstName(firstName);
+
+	AcString lastName;
+	if ((es = pFiler->readString(lastName)) != Acad::eOk)
+		return (es);
+	setLastName(lastName);
+
 	return (pFiler->filerStatus ()) ;
 }
 
@@ -105,6 +150,30 @@ Acad::ErrorStatus utc_customEntityStep6::dxfOutFields (AcDbDxfFiler *pFiler) con
 		return (es) ;
 	//----- Output params
 	//.....
+	Adesk::Int32 nId;
+	if (iD(nId) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeInt32(AcDb::kDxfInt32, nId);
+
+	}
+
+	Adesk::Int32 nCube;
+	if (cube(nCube) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeInt32(AcDb::kDxfInt32, nCube);
+	}
+
+	TCHAR* sFirstName;
+	if (firstName(sFirstName) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeString(AcDb::kDxfXTextString, sFirstName);
+	}
+
+	TCHAR* sLastName;
+	if (lastName(sLastName) == Acad::ErrorStatus::eOk)
+	{
+		pFiler->writeString(AcDb::kDxfXTextString, sLastName);
+	}
 
 	return (pFiler->filerStatus ()) ;
 }
@@ -195,7 +264,7 @@ Adesk::UInt32 utc_customEntityStep6::subSetAttributes (AcGiDrawableTraits *trait
 
 
 
-Acad::ErrorStatus utc_customEntityStep6::firstName(TCHAR*& firstName)
+Acad::ErrorStatus utc_customEntityStep6::firstName(TCHAR*& firstName) const
 {
 	assertReadEnabled();
 	firstName = _tcsdup(m_firstName);
@@ -216,7 +285,7 @@ Acad::ErrorStatus utc_customEntityStep6::setFirstName(const TCHAR* firstName)
 
 
 
-Acad::ErrorStatus utc_customEntityStep6::lastName(TCHAR*& lastName)
+Acad::ErrorStatus utc_customEntityStep6::lastName(TCHAR*& lastName) const
 {
 	assertReadEnabled();
 	lastName = _tcsdup(m_lastName);
@@ -237,7 +306,7 @@ Acad::ErrorStatus utc_customEntityStep6::setLastName(const TCHAR* lastName)
 
 
 
-Acad::ErrorStatus utc_customEntityStep6::cube(Adesk::Int32& cube)
+Acad::ErrorStatus utc_customEntityStep6::cube(Adesk::Int32& cube)  const
 {
 	assertReadEnabled();
 	cube = m_cube;
@@ -255,7 +324,7 @@ Acad::ErrorStatus utc_customEntityStep6::setCube(const Adesk::Int32 cube)
 
 
 
-Acad::ErrorStatus utc_customEntityStep6::iD(Adesk::Int32& id)
+Acad::ErrorStatus utc_customEntityStep6::iD(Adesk::Int32& id)  const
 {
 	assertReadEnabled();
 	id = m_ID;

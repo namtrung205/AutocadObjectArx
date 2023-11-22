@@ -83,13 +83,13 @@ private:
 
 public:
 	Acad::ErrorStatus setID(const Adesk::Int32 ID);
-	Acad::ErrorStatus iD(Adesk::Int32& ID);
+	Acad::ErrorStatus iD(Adesk::Int32& ID) const;
 	Acad::ErrorStatus setCube(const Adesk::Int32 cube);
-	Acad::ErrorStatus cube(Adesk::Int32& cube);
+	Acad::ErrorStatus cube(Adesk::Int32& cube) const;
 	Acad::ErrorStatus setFirstName(const TCHAR* firstName);
-	Acad::ErrorStatus firstName(TCHAR*& firstName);
+	Acad::ErrorStatus firstName(TCHAR*& firstName) const;
 	Acad::ErrorStatus setLastName(const TCHAR* lastName);
-	Acad::ErrorStatus lastName(TCHAR*& lastName);
+	Acad::ErrorStatus lastName(TCHAR*& lastName) const;
 
 
 } ;
