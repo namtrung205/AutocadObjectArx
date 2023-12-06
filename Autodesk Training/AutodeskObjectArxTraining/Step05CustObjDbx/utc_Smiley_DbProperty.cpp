@@ -172,6 +172,10 @@ void utc_Smiley::setMouth(const AcGePoint3d& left, const AcGePoint3d& bottom, co
 
 }
 
+void utc_Smiley::moveMouthToPoint(const AcGePoint3d point)
+{
+}
+
 
 //validate radius
 void utc_Smiley::ensureRadiusMouth()

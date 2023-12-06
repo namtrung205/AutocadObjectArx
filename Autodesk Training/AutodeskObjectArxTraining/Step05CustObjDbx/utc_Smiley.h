@@ -150,9 +150,32 @@ public:
 	// Step 4
 	virtual Acad::ErrorStatus subGetGripPoints(AcGePoint3dArray& gripPoints) const;
 
-	Acad::ErrorStatus subGetGripPoints(AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d& curViewDir, const int bitflags) const;
+	virtual Acad::ErrorStatus subMoveGripPointsAt(const AcGePoint3dArray& gripPoints, const AcDbIntArray& indices);
 
-	Acad::ErrorStatus subGetOsnapPoints(AcDb::OsnapMode osnapMode, Adesk::GsMarker, const AcGePoint3d&, const AcGePoint3d&, const AcGeMatrix3d&, const AcGeMatrix3d&, AcGePoint3dArray& snapPoints) const;
+	virtual Acad::ErrorStatus subGetGripPoints(AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d& curViewDir, const int bitflags) const;
+
+	virtual Acad::ErrorStatus subGetGsMarkersAtSubentPath(const AcDbFullSubentPath& subPath, AcArray<Adesk::GsMarker>& gsMarkers) const;
+
+	virtual Acad::ErrorStatus subGetSubentPathsAtGsMarker(AcDb::SubentType type, Adesk::GsMarker gsMark, const AcGePoint3d& pickPoint, const AcGeMatrix3d& viewXform, int& numPaths, AcDbFullSubentPath*& subentPaths, int numInserts, AcDbObjectId* entAndInsertStack) const;
+
+	Acad::ErrorStatus subGetSubentClassId(const AcDbFullSubentPath& path, CLSID* clsId) const;
+
+	Acad::ErrorStatus subGetSubentPathGeomExtents(const AcDbFullSubentPath& path, AcDbExtents& extents) const;
+
+	AcDbEntity* subSubentPtr(const AcDbFullSubentPath& id) const;
+
+	Acad::ErrorStatus subGetGripPointsAtSubentPath(const AcDbFullSubentPath& path, AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d& curViewDir, const int bitflags) const;
+
+
+	virtual Acad::ErrorStatus subGetOsnapPoints(AcDb::OsnapMode osnapMode, Adesk::GsMarker, const AcGePoint3d&, const AcGePoint3d&, const AcGeMatrix3d&, const AcGeMatrix3d&, AcGePoint3dArray& snapPoints) const;
+
+	virtual Acad::ErrorStatus subMoveGripPointsAtSubentPaths(const AcDbFullSubentPathArray& paths, const AcDbVoidPtrArray& gripAppData, const AcGeVector3d& offset, const int bitflags);
+
+	Acad::ErrorStatus subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData, const AcGeVector3d& offset, const int bitflags);
+
+	Acad::ErrorStatus subMoveGripPointsAt(const AcDbIntArray& indices, const AcGeVector3d& offset);
+
+	Acad::ErrorStatus subTransformSubentPathsBy(const AcDbFullSubentPathArray& paths, const AcGeMatrix3d& xform);
 	
 
 public:
