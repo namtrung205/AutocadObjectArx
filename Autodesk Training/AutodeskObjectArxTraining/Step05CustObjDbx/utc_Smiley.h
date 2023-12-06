@@ -49,6 +49,8 @@
 #include "gearc3d.h"
 #define SMILEY_WITH_TEXT
 
+#define kPi  3.14159265358979323846
+
 //-----------------------------------------------------------------------------
 class DLLIMPEXP utc_Smiley : public AcDbEntity {
 
@@ -63,10 +65,13 @@ private:
 	double          m_eyesapart;         // smiley eyes apart
 	double          m_eyesheight;        // smiley eyes height
 	double          m_eyesize;           // smiley eyes size
-	AcCmEntityColor m_backcolor;
+	AcCmEntityColor m_facecolor;
+	AcCmEntityColor m_eyescolor;
+	AcCmEntityColor m_mouthcolor;
 
 #ifdef SMILEY_WITH_TEXT
 	static const ACHAR mTextFieldValue[];
+
 	AcString m_TextField;
 #endif
 
@@ -137,12 +142,26 @@ protected:
 
 
 public:
+	// Step 3
+	Acad::ErrorStatus subTransformBy(const AcGeMatrix3d& xform);	// for moving and rotating 
+	void scaleRadius(const double r);								// for scalling
+
+
+	// Step 4
+	virtual Acad::ErrorStatus subGetGripPoints(AcGePoint3dArray& gripPoints) const;
+
+	Acad::ErrorStatus subGetGripPoints(AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d& curViewDir, const int bitflags) const;
+
+	Acad::ErrorStatus subGetOsnapPoints(AcDb::OsnapMode osnapMode, Adesk::GsMarker, const AcGePoint3d&, const AcGePoint3d&, const AcGeMatrix3d&, const AcGeMatrix3d&, AcGePoint3dArray& snapPoints) const;
+	
+
+public:
 
 //
 // Smiley property functions
 //
-	virtual AcCmEntityColor backColor()	const;		// smiley back color
-	virtual void setBackColor(const AcCmEntityColor& color);
+	virtual AcCmEntityColor faceColor()	const;		// smiley back color
+	virtual void setFaceColor(const AcCmEntityColor& color);
 
 	virtual AcGeVector3d normal() const;			// smiley normal
 	virtual void setNormal(const AcGeVector3d v);

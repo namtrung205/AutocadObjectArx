@@ -45,6 +45,9 @@
     <ClCompile Include="utc_Smiley_DbTransform.cpp">
       <Filter>Source Files\SmileyDB</Filter>
     </ClCompile>
+    <ClCompile Include="utc_SmileyIO.cpp">
+      <Filter>Source Files\SmileyDB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">

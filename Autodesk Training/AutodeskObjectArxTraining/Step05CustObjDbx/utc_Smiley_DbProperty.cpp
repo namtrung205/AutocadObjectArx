@@ -5,16 +5,16 @@
 
 
 //properties
-AcCmEntityColor utc_Smiley::backColor() const
+AcCmEntityColor utc_Smiley::faceColor() const
 {
 	assertReadEnabled();
-	return AcCmEntityColor();
+	return m_facecolor;
 }
 
-void utc_Smiley::setBackColor(const AcCmEntityColor& color)
+void utc_Smiley::setFaceColor(const AcCmEntityColor& color)
 {
 	assertWriteEnabled();
-	m_backcolor = color;
+	m_facecolor = color;
 }
 
 AcGeVector3d utc_Smiley::normal() const
@@ -173,5 +173,18 @@ void utc_Smiley::setMouth(const AcGePoint3d& left, const AcGePoint3d& bottom, co
 }
 
 
+//validate radius
+void utc_Smiley::ensureRadiusMouth()
+{
+	double d;
+	AcGePoint3d cen(center());
+	if ((d = cen.distanceTo(mouthLeft())) > radius() / 1.1) setRadius(1.1 * d);
+	if ((d = cen.distanceTo(mouthRight())) > radius() / 1.1) setRadius(1.1 * d);
+	if ((d = cen.distanceTo(mouthBottom())) > radius() / 1.1) setRadius(1.1 * d);
+}
 
-
+void utc_Smiley::ensureRadiusEyes()
+{
+	double d = center().distanceTo(leftEyeCenter()) + eyeSize();
+	if (d > radius() / 1.1) setRadius(1.1 * d);
+}
