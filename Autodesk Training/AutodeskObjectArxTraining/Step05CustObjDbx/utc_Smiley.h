@@ -51,6 +51,16 @@
 
 #define kPi  3.14159265358979323846
 
+
+enum Emo
+{
+	kSmile,
+	kSad,
+	kHappy
+
+};
+
+
 //-----------------------------------------------------------------------------
 class DLLIMPEXP utc_Smiley : public AcDbEntity {
 
@@ -68,6 +78,7 @@ private:
 	AcCmEntityColor m_facecolor;
 	AcCmEntityColor m_eyescolor;
 	AcCmEntityColor m_mouthcolor;
+	Emo m_emo;
 
 #ifdef SMILEY_WITH_TEXT
 	static const ACHAR mTextFieldValue[];
@@ -80,6 +91,10 @@ protected:
 	void ensureRadiusEyes();
 
 public:
+
+
+
+
 	/** Description:
 	Enumeration for Smiley GS mark type.
 	*/
@@ -223,6 +238,12 @@ public:
 	// whole mouth
 	virtual void setMouth(const AcGePoint3d& left, const AcGePoint3d& bottom, const AcGePoint3d& right);
 	void moveMouthToPoint(const AcGePoint3d point);
+
+
+	//Set emo
+	void setEmo(const Emo emo);
+	Emo emo();
+	
 
 
 

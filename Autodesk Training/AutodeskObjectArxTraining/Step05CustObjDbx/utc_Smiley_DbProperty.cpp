@@ -176,6 +176,16 @@ void utc_Smiley::moveMouthToPoint(const AcGePoint3d point)
 {
 }
 
+void utc_Smiley::setEmo(const Emo emo)
+{
+	m_emo = emo;
+}
+
+Emo utc_Smiley::emo()
+{
+	return m_emo;
+}
+
 
 //validate radius
 void utc_Smiley::ensureRadiusMouth()
