@@ -155,7 +155,7 @@ public:
 	virtual Acad::ErrorStatus subMoveGripPointsAt(const AcDbIntArray& indices,const AcGeVector3d& offset);
 	virtual Acad::ErrorStatus subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData,const AcGeVector3d& offset,const int bitflags);
 
-
+	//sub path and marker
 	virtual Acad::ErrorStatus subGetGsMarkersAtSubentPath(const AcDbFullSubentPath& subPath, AcArray<Adesk::GsMarker>& gsMarkers) const;
 
 	virtual Acad::ErrorStatus subGetSubentPathsAtGsMarker(AcDb::SubentType type, Adesk::GsMarker gsMark, const AcGePoint3d& pickPoint, const AcGeMatrix3d& viewXform, int& numPaths, AcDbFullSubentPath*& subentPaths, int numInserts, AcDbObjectId* entAndInsertStack) const;
@@ -167,13 +167,20 @@ public:
 	AcDbEntity* subSubentPtr(const AcDbFullSubentPath& id) const;
 
 	Acad::ErrorStatus subGetGripPointsAtSubentPath(const AcDbFullSubentPath& path, AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize, const AcGeVector3d& curViewDir, const int bitflags) const;
-
-
-	virtual Acad::ErrorStatus subGetOsnapPoints(AcDb::OsnapMode osnapMode, Adesk::GsMarker, const AcGePoint3d&, const AcGePoint3d&, const AcGeMatrix3d&, const AcGeMatrix3d&, AcGePoint3dArray& snapPoints) const;
+	Acad::ErrorStatus subTransformSubentPathsBy(const AcDbFullSubentPathArray& paths, const AcGeMatrix3d& xform);
 
 	virtual Acad::ErrorStatus subMoveGripPointsAtSubentPaths(const AcDbFullSubentPathArray& paths, const AcDbVoidPtrArray& gripAppData, const AcGeVector3d& offset, const int bitflags);
 
-	Acad::ErrorStatus subTransformSubentPathsBy(const AcDbFullSubentPathArray& paths, const AcGeMatrix3d& xform);
+	//Osnap
+	virtual Acad::ErrorStatus subGetOsnapPoints(AcDb::OsnapMode osnapMode,
+		Adesk::GsMarker       gsSelectionMark,
+		const AcGePoint3d& pickPoint,
+		const AcGePoint3d& lastPoint,
+		const AcGeMatrix3d& viewXform,
+		AcGePoint3dArray& snapPoints,
+		AcDbIntArray& geomIds) const;
+	
+
 	
 
 	//explode

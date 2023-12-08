@@ -60,3 +60,38 @@ Acad::ErrorStatus utc_Smiley::subExplode(AcDbVoidPtrArray& entitySet) const
 
     return eOk;
 }
+
+
+
+Acad::ErrorStatus utc_Smiley::subGetOsnapPoints(AcDb::OsnapMode osnapMode, Adesk::GsMarker gsSelectionMark, const AcGePoint3d& pickPoint, const AcGePoint3d& lastPoint, const AcGeMatrix3d& viewXform, AcGePoint3dArray& snapPoints, AcDbIntArray& geomIds) const
+{
+    assertReadEnabled();
+    switch (osnapMode)
+    {
+    case AcDb::kOsModeCen:
+        snapPoints.append(center());			// Osnap center to the face's center
+        snapPoints.append(leftEyeCenter());
+        snapPoints.append(rightEyeCenter());
+        return eOk;
+
+    case AcDb::kOsModeQuad:						// Osnap quad to the face's quad points
+    case AcDb::kOsModeNear:
+                { AcGeVector3d xoff(radius(), 0, 0), yoff(0, radius(), 0);
+                AcGePoint3d cen(center());
+                snapPoints.append(cen + xoff);
+                snapPoints.append(cen + yoff);
+                snapPoints.append(cen - xoff);
+                snapPoints.append(cen - yoff);
+                }
+    return eOk;
+
+    case AcDb::kOsModeMid:
+    case AcDb::kOsModeEnd:
+    case AcDb::kOsModeNode:
+    case AcDb::kOsModeIns:
+    case AcDb::kOsModePerp:
+    case AcDb::kOsModeTan:
+    default: break;
+    }
+    return eInvalidInput;
+}
