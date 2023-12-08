@@ -176,6 +176,9 @@ public:
 	Acad::ErrorStatus subTransformSubentPathsBy(const AcDbFullSubentPathArray& paths, const AcGeMatrix3d& xform);
 	
 
+	//explode
+	virtual Acad::ErrorStatus subExplode(AcDbVoidPtrArray& entitySet) const;
+
 public:
 
 //

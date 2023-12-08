@@ -85,6 +85,7 @@
     <ClCompile Include="utc_EmployeeDetails.cpp" />
     <ClCompile Include="utc_Smiley.cpp" />
     <ClCompile Include="utc_SmileyIO.cpp" />
+    <ClCompile Include="utc_SmileyOther.cpp" />
     <ClCompile Include="utc_Smiley_DbProperty.cpp" />
     <ClCompile Include="utc_Smiley_DbTransform.cpp" />
   </ItemGroup>
