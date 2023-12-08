@@ -135,7 +135,111 @@ Acad::ErrorStatus utc_Smiley::subGetOsnapPoints(AcDb::OsnapMode osnapMode,
 // smiley object using a grip points. To control the size of smiley at 
 // changes of its elements, we have implemented the 'ensureRadius' functions.
 //
-Acad::ErrorStatus utc_Smiley::subGetGripPoints(AcGePoint3dArray& gripPoints) const
+//Acad::ErrorStatus utc_Smiley::subGetGripPoints(AcGePoint3dArray& gripPoints) const
+//{
+//    assertReadEnabled();
+//    //indices
+//    // Grip points to face
+//    AcGePoint3d cen(center());
+//    AcGeVector3d xoff(radius(), 0, 0),
+//        yoff(0, radius(), 0);
+//    gripPoints.append(cen);			// 0
+//    gripPoints.append(cen + xoff);		// 1
+//    gripPoints.append(cen + yoff);		// 2
+//    gripPoints.append(cen - xoff);		// 3
+//    gripPoints.append(cen - yoff);		// 4
+//    // Grip points to mouth
+//    gripPoints.append(mouthLeft());		// 5
+//    gripPoints.append(mouthRight());		// 6
+//    gripPoints.append(mouthBottom());		// 7
+//    gripPoints.append(AcGeLineSeg3d(mouthLeft(), mouthRight()).midPoint());  // 8
+//    // Grip points to eye
+//    xoff.x = yoff.y = m_eyesize;
+//    // Left eye
+//    cen = leftEyeCenter();
+//    gripPoints.append(cen);			    // 9
+//    gripPoints.append(cen + xoff);		// 10
+//    gripPoints.append(cen + yoff);		// 11
+//    gripPoints.append(cen - xoff);		// 12
+//    gripPoints.append(cen - yoff);		// 13
+//    // Left eye
+//    cen = rightEyeCenter();
+//    gripPoints.append(cen);			    // 14
+//    gripPoints.append(cen + xoff);		// 15
+//    gripPoints.append(cen + yoff);		// 16
+//    gripPoints.append(cen - xoff);		// 17
+//    gripPoints.append(cen - yoff);		// 18
+//
+//    return eOk;
+//}
+
+//Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcGePoint3dArray& gripPoints,
+//    const AcDbIntArray& indices)
+//{
+//    assertWriteEnabled();
+//    int idx, count = indices.length();
+//    AcGePoint3d idxpoint;
+//
+//    for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
+//    {
+//        idx = indices[i];
+//        idxpoint = gripPoints[idx];
+//
+//        if (idx == 0)						// Move the smiley center
+//        {
+//            setCenter(idxpoint);
+//        }
+//        else if (idx >= 1 && idx <= 4)		// Stretch the smiley radius
+//        {
+//            scaleRadius(idxpoint.distanceTo(center()));
+//        }
+//        else if (idx == 5)					// Stretch the left edge of mouth
+//        {
+//            setMouth(idxpoint, mouthBottom(), mouthRight());
+//            ensureRadiusMouth();
+//        }
+//        else if (idx == 6)					// Stretch the right edge of mouth
+//        {
+//            setMouth(mouthLeft(), mouthBottom(), idxpoint);
+//            ensureRadiusMouth();
+//        }
+//        else if (idx == 7)					// Stretch the bottom edge of mouth
+//        {
+//            setMouth(mouthLeft(), idxpoint, mouthRight());
+//            ensureRadiusMouth();
+//        }
+//        else if (idx == 8)					// Move the mouth
+//        {
+//            moveMouthToPoint(idxpoint);
+//            ensureRadiusMouth();
+//        }
+//        else if (idx == 9 || idx == 14)		// Move the center of eyes 
+//        {
+//            setEyesApart((idxpoint.x - center().x) * 2);					// Apart >= 2*eyeSize
+//
+//            if (eyesApart() < 2 * eyeSize()) setEyesApart(2 * eyeSize());
+//
+//            setEyesHeight(idxpoint.y - center().y);						// Height >= eyeSize
+//
+//            if (eyesHeight() < eyeSize()) setEyesHeight(eyeSize());
+//
+//            ensureRadiusEyes();
+//        }
+//        else if ((idx >= 10 && idx <= 13) || (idx >= 15 && idx <= 18))	// Stretch the radius of eyes 
+//        {
+//            setEyeSize(idxpoint.distanceTo((idx < 14) ? leftEyeCenter() : rightEyeCenter()));
+//
+//            if (2 * eyeSize() > eyesApart()) setEyeSize(eyesApart() / 2);
+//            ensureRadiusEyes();
+//        };
+//    }
+//    return eOk;
+//}
+//
+
+
+
+Acad::ErrorStatus utc_Smiley::subGetGripPoints(AcGePoint3dArray& gripPoints, AcDbIntArray& osnapModes, AcDbIntArray& geomIds) const
 {
     assertReadEnabled();
     //indices
@@ -173,171 +277,217 @@ Acad::ErrorStatus utc_Smiley::subGetGripPoints(AcGePoint3dArray& gripPoints) con
     return eOk;
 }
 
-Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcGePoint3dArray& gripPoints,
-    const AcDbIntArray& indices)
+Acad::ErrorStatus utc_Smiley::subGetGripPoints(
+    AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize,
+    const AcGeVector3d& curViewDir, const int bitflags
+) const 
+{
+    assertReadEnabled();
+
+    //----- This method is never called unless you return eNotImplemented 
+    //----- from the new getGripPoints() method below (which is the default implementation)
+    return (AcDbEntity::subGetGripPoints(grips, curViewUnitSize, gripSize, curViewDir, bitflags));
+}
+
+Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbIntArray& indices, const AcGeVector3d& offset)
 {
     assertWriteEnabled();
     int idx, count = indices.length();
     AcGePoint3d idxpoint;
+    AcGePoint3d oldquad, newquad;
 
     for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
     {
         idx = indices[i];
-        idxpoint = gripPoints[idx];
 
-        if (idx == 0)						// Move the smiley center
+        switch (idx)
         {
-            setCenter(idxpoint);
-        }
-        else if (idx >= 1 && idx <= 4)		// Stretch the smiley radius
+        case 0:
         {
-            scaleRadius(idxpoint.distanceTo(center()));
-        }
-        else if (idx == 5)					// Stretch the left edge of mouth
-        {
-            setMouth(idxpoint, mouthBottom(), mouthRight());
-            ensureRadiusMouth();
-        }
-        else if (idx == 6)					// Stretch the right edge of mouth
-        {
-            setMouth(mouthLeft(), mouthBottom(), idxpoint);
-            ensureRadiusMouth();
-        }
-        else if (idx == 7)					// Stretch the bottom edge of mouth
-        {
-            setMouth(mouthLeft(), idxpoint, mouthRight());
-            ensureRadiusMouth();
-        }
-        else if (idx == 8)					// Move the mouth
-        {
-            moveMouthToPoint(idxpoint);
-            ensureRadiusMouth();
-        }
-        else if (idx == 9 || idx == 14)		// Move the center of eyes 
-        {
-            setEyesApart((idxpoint.x - center().x) * 2);					// Apart >= 2*eyeSize
+            setCenter(center() + offset);
+        } break;
 
-            if (eyesApart() < 2 * eyeSize()) setEyesApart(2 * eyeSize());
+        case 1:
+        {
+            oldquad = center() + AcGeVector3d(radius(), 0, 0);
+            newquad = oldquad + offset;
+            scaleRadius(newquad.distanceTo(center()));
+        } break;
 
-            setEyesHeight(idxpoint.y - center().y);						// Height >= eyeSize
+        case 2:
+        {
+            oldquad = center() + AcGeVector3d(0, radius(), 0);
+            newquad = oldquad + offset;
+            scaleRadius(newquad.distanceTo(center()));
+        } break;
 
-            if (eyesHeight() < eyeSize()) setEyesHeight(eyeSize());
+        case 3:
+        {
+            oldquad = center() - AcGeVector3d(radius(), 0, 0);
+            newquad = oldquad + offset;
+            scaleRadius(newquad.distanceTo(center()));
+        } break;
+
+        case 4:
+        {
+            oldquad = center() - AcGeVector3d(0, radius(), 0);
+            newquad = oldquad + offset;
+            scaleRadius(newquad.distanceTo(center()));
+        } break;
+        case 5:
+        {
+            setMouth(mouthLeft() + offset, mouthBottom(), mouthRight());
+            ensureRadiusMouth();
+        } break;
+
+        case 6:
+        {
+            setMouth(mouthLeft(), mouthBottom(), mouthRight() + offset);
+            ensureRadiusMouth();
+        } break;
+
+        case 7:
+        {
+            setMouth(mouthLeft(), mouthBottom() + offset, mouthRight());
+            ensureRadiusMouth();
+        } break;
+
+        case 8:
+        {
+            setMouth(mouthLeft() + offset, mouthBottom() + offset, mouthRight() + offset);
+            ensureRadiusMouth();
+        } break;
+
+        case 9:
+        case 14:
+        {
+            AcGePoint3d eyecen;
+
+            if (idx == 9)
+                eyecen = leftEyeCenter();
+            else
+                eyecen = rightEyeCenter();
+
+            if (m_eyesheight + offset.x < 0)
+                setEyesHeight(0);
+            else
+                setEyesHeight(m_eyesheight + offset.y);
+
+            if (eyecen.x < center().x) // left eye
+            {
+                if (m_eyesapart - (offset.x * 2) < m_eyesize * 2)
+                    setEyesApart(m_eyesize * 2);
+                else
+                    setEyesApart(m_eyesapart - (offset.x * 2));
+            }
+            else // right eye
+            {
+                if (m_eyesapart + (offset.x * 2) < m_eyesize * 2)
+                    setEyesApart(m_eyesize * 2);
+                else
+                    setEyesApart(m_eyesapart + (offset.x * 2));
+            }
 
             ensureRadiusEyes();
-        }
-        else if ((idx >= 10 && idx <= 13) || (idx >= 15 && idx <= 18))	// Stretch the radius of eyes 
-        {
-            setEyeSize(idxpoint.distanceTo((idx < 14) ? leftEyeCenter() : rightEyeCenter()));
+        } break;
 
-            if (2 * eyeSize() > eyesApart()) setEyeSize(eyesApart() / 2);
+        case 10:
+        case 15:
+        {
+            AcGePoint3d eyecen;
+
+            if (idx == 10)
+                eyecen = leftEyeCenter();
+            else
+                eyecen = rightEyeCenter();
+
+            oldquad = eyecen + AcGeVector3d(m_eyesize, 0, 0);
+            newquad = oldquad + offset;
+
+            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+                setEyeSize(m_eyesapart / 2);
+            else
+                setEyeSize(newquad.distanceTo(eyecen));
+
             ensureRadiusEyes();
-        };
+        } break;
+
+        case 11:
+        case 16:
+        {
+            AcGePoint3d eyecen;
+
+            if (idx == 11)
+                eyecen = leftEyeCenter();
+            else
+                eyecen = rightEyeCenter();
+
+            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+            newquad = oldquad + offset;
+
+            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+                setEyeSize(m_eyesapart / 2);
+            else
+                setEyeSize(newquad.distanceTo(eyecen));
+
+            ensureRadiusEyes();
+        } break;
+
+        case 12:
+        case 17:
+        {
+            AcGePoint3d eyecen;
+
+            if (idx == 12)
+                eyecen = leftEyeCenter();
+            else
+                eyecen = rightEyeCenter();
+
+            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+            newquad = oldquad + offset;
+
+            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+                setEyeSize(m_eyesapart / 2);
+            else
+                setEyeSize(newquad.distanceTo(eyecen));
+
+            ensureRadiusEyes();
+        } break;
+
+        case 13:
+        case 18:
+        {
+            AcGePoint3d eyecen;
+
+            if (idx == 18)
+                eyecen = leftEyeCenter();
+            else
+                eyecen = rightEyeCenter();
+
+            oldquad = eyecen - AcGeVector3d(0, m_eyesize, 0);
+            newquad = oldquad + offset;
+
+            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+                setEyeSize(m_eyesapart / 2);
+            else
+                setEyeSize(newquad.distanceTo(eyecen));
+
+            ensureRadiusEyes();
+        } break;
+        }
     }
+
     return eOk;
+}
+
+Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData, const AcGeVector3d& offset, const int bitflags)
+{
+    return AcDbEntity::subMoveGripPointsAt(gripAppData, offset, bitflags);
 }
 
 
 
-Acad::ErrorStatus utc_Smiley::subGetGripPoints(
-    AcDbGripDataPtrArray& grips, const double curViewUnitSize, const int gripSize,
-    const AcGeVector3d& curViewDir, const int bitflags
-) const {
-    assertReadEnabled();
 
-    //indices
-    // Grip points to face
-
-    AcGePoint3d cen(center());
-    AcGeVector3d xoff(radius(), 0, 0),
-        yoff(0, radius(), 0);
-
-    AcDbGripData* gripData_1 = new AcDbGripData();
-    gripData_1->setGripPoint(cen);
-    grips.append(gripData_1);
-
-    AcDbGripData* gripData_2 = new AcDbGripData();
-    gripData_2->setGripPoint(cen + xoff);
-    grips.append(gripData_2);
-
-    AcDbGripData* gripData_3 = new AcDbGripData();
-    gripData_3->setGripPoint(cen + yoff);
-    grips.append(gripData_3);
-
-    AcDbGripData* gripData_4 = new AcDbGripData();
-    gripData_4->setGripPoint(cen - xoff);
-    grips.append(gripData_4);
-
-    AcDbGripData* gripData_5 = new AcDbGripData();
-    gripData_5->setGripPoint(cen - yoff);
-    grips.append(gripData_5);
-
-    //// Grip points to mouth
-    AcDbGripData* gripData_6 = new AcDbGripData();
-    gripData_6->setGripPoint(mouthLeft());
-    grips.append(gripData_6);
-
-    AcDbGripData* gripData_7 = new AcDbGripData();
-    gripData_7->setGripPoint(mouthRight());
-    grips.append(gripData_7);
-
-    AcDbGripData* gripData_8 = new AcDbGripData();
-    gripData_8->setGripPoint(mouthBottom());
-    grips.append(gripData_8);
-
-
-    AcDbGripData* gripData_9 = new AcDbGripData();
-    gripData_9->setGripPoint(AcGeLineSeg3d(mouthLeft(), mouthRight()).midPoint());
-    grips.append(gripData_9);
-
-    //// Grip points to eye
-    xoff.x = yoff.y = m_eyesize;
-    cen = leftEyeCenter();
-
-    //// Left eye
-    AcDbGripData* gripData_10 = new AcDbGripData();
-    gripData_10->setGripPoint(cen);
-    grips.append(gripData_10);
-
-    AcDbGripData* gripData_11 = new AcDbGripData();
-    gripData_11->setGripPoint(cen + xoff);
-    grips.append(gripData_11);
-
-    AcDbGripData* gripData_12 = new AcDbGripData();
-    gripData_12->setGripPoint(cen + yoff);
-    grips.append(gripData_12);
-
-    AcDbGripData* gripData_13 = new AcDbGripData();
-    gripData_13->setGripPoint(cen - xoff);
-    grips.append(gripData_13);
-
-    AcDbGripData* gripData_14 = new AcDbGripData();
-    gripData_14->setGripPoint(cen - yoff);
-    grips.append(gripData_14);
-
-    cen = rightEyeCenter();
-
-    AcDbGripData* gripData_15 = new AcDbGripData();
-    gripData_15->setGripPoint(cen);
-    grips.append(gripData_15);
-
-    AcDbGripData* gripData_16 = new AcDbGripData();
-    gripData_16->setGripPoint(cen + xoff);
-    grips.append(gripData_16);
-
-    AcDbGripData* gripData_17 = new AcDbGripData();
-    gripData_17->setGripPoint(cen + yoff);
-    grips.append(gripData_17);
-
-    AcDbGripData* gripData_18 = new AcDbGripData();
-    gripData_18->setGripPoint(cen - xoff);
-    grips.append(gripData_18);
-
-    AcDbGripData* gripData_19 = new AcDbGripData();
-    gripData_19->setGripPoint(cen - yoff);
-    grips.append(gripData_19);
-
-    return eOk;
-}
 
 
 
@@ -784,417 +934,394 @@ Acad::ErrorStatus utc_Smiley::subMoveGripPointsAtSubentPaths(
 
 //==================================================================================================//
 
-class MyGripAppData : public AcDbObject
-
-{
-
-public:
-
-    ACRX_DECLARE_MEMBERS(MyGripAppData);
-
-
-
-    Adesk::UInt32 m_GripNumber;
-
-
-
-    MyGripAppData() { m_GripNumber = 0; }
-
-
-
-    MyGripAppData(int gripNumber) { m_GripNumber = gripNumber; }
-
-};
-
-
-Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData,
-    const AcGeVector3d& offset, const int bitflags)
-{
-
-    assertWriteEnabled();
-    int idx, count = gripAppData.length();
-    AcGePoint3d idxpoint;
-    AcGePoint3d oldquad, newquad;
-
-    for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
-    {
-
-
-        AcDbGripData* gripdata = static_cast<AcDbGripData*> (gripAppData.at(i));
-
-        switch (idx)
-        {
-            case 0:
-            {
-                setCenter(center() + offset);
-            } break;
-
-            case 1:
-            {
-                oldquad = center() + AcGeVector3d(radius(), 0, 0);
-                newquad = oldquad + offset;
-                scaleRadius(newquad.distanceTo(center()));
-            } break;
-
-            case 2:
-            {
-                oldquad = center() + AcGeVector3d(0, radius(), 0);
-                newquad = oldquad + offset;
-                scaleRadius(newquad.distanceTo(center()));
-            } break;
-
-            case 3:
-            {
-                oldquad = center() - AcGeVector3d(radius(), 0, 0);
-                newquad = oldquad + offset;
-                scaleRadius(newquad.distanceTo(center()));
-            } break;
-
-            case 4:
-            {
-                oldquad = center() - AcGeVector3d(0, radius(), 0);
-                newquad = oldquad + offset;
-                scaleRadius(newquad.distanceTo(center()));
-            } break;
-            case 5:
-            {
-                setMouth(mouthLeft() + offset, mouthBottom(), mouthRight());
-                ensureRadiusMouth();
-            } break;
-
-            case 6:
-            {
-                setMouth(mouthLeft(), mouthBottom(), mouthRight() + offset);
-                ensureRadiusMouth();
-            } break;
-
-            case 7:
-            {
-                setMouth(mouthLeft(), mouthBottom() + offset, mouthRight());
-                ensureRadiusMouth();
-            } break;
-
-            case 8:
-            {
-                setMouth(mouthLeft() + offset, mouthBottom() + offset, mouthRight() + offset);
-                ensureRadiusMouth();
-            } break;
-
-            case 9:
-            case 14:
-            {
-                AcGePoint3d eyecen;
-
-                if (idx == 9)
-                    eyecen = leftEyeCenter();
-                else
-                    eyecen = rightEyeCenter();
-
-                if (m_eyesheight + offset.x < 0)
-                    setEyesHeight(0);
-                else
-                    setEyesHeight(m_eyesheight + offset.y);
-
-                if (eyecen.x < center().x) // left eye
-                {
-                    if (m_eyesapart - (offset.x * 2) < m_eyesize * 2)
-                        setEyesApart(m_eyesize * 2);
-                    else
-                        setEyesApart(m_eyesapart - (offset.x * 2));
-                }
-                else // right eye
-                {
-                    if (m_eyesapart + (offset.x * 2) < m_eyesize * 2)
-                        setEyesApart(m_eyesize * 2);
-                    else
-                        setEyesApart(m_eyesapart + (offset.x * 2));
-                }
-
-                ensureRadiusEyes();
-            } break;
-
-            case 10:
-            case 15:
-            {
-                AcGePoint3d eyecen;
-
-                if (idx == 10)
-                    eyecen = leftEyeCenter();
-                else
-                    eyecen = rightEyeCenter();
-
-                oldquad = eyecen + AcGeVector3d(m_eyesize, 0, 0);
-                newquad = oldquad + offset;
-
-                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                    setEyeSize(m_eyesapart / 2);
-                else
-                    setEyeSize(newquad.distanceTo(eyecen));
-
-                ensureRadiusEyes();
-            } break;
-
-            case 11:
-            case 16:
-            {
-                AcGePoint3d eyecen;
-
-                if (idx == 11)
-                    eyecen = leftEyeCenter();
-                else
-                    eyecen = rightEyeCenter();
-
-                oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
-                newquad = oldquad + offset;
-
-                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                    setEyeSize(m_eyesapart / 2);
-                else
-                    setEyeSize(newquad.distanceTo(eyecen));
-
-                ensureRadiusEyes();
-            } break;
-
-            case 12:
-            case 17:
-            {
-                AcGePoint3d eyecen;
-
-                if (idx == 12)
-                    eyecen = leftEyeCenter();
-                else
-                    eyecen = rightEyeCenter();
-
-                oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
-                newquad = oldquad + offset;
-
-                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                    setEyeSize(m_eyesapart / 2);
-                else
-                    setEyeSize(newquad.distanceTo(eyecen));
-
-                ensureRadiusEyes();
-            } break;
-
-            case 13:
-            case 18:
-            {
-                AcGePoint3d eyecen;
-
-                if (idx == 18)
-                    eyecen = leftEyeCenter();
-                else
-                    eyecen = rightEyeCenter();
-
-                oldquad = eyecen - AcGeVector3d(0, m_eyesize, 0);
-                newquad = oldquad + offset;
-
-                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                    setEyeSize(m_eyesapart / 2);
-                else
-                    setEyeSize(newquad.distanceTo(eyecen));
-
-                ensureRadiusEyes();
-            } break;
-        }
-    }
-
-    return eOk;
-}
-
+//Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData,
+//    const AcGeVector3d& offset, const int bitflags)
+//{
+//
+//    assertWriteEnabled();
+//    int idx, count = gripAppData.length();
+//    AcGePoint3d idxpoint;
+//    AcGePoint3d oldquad, newquad;
+//
+//    for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
+//    {
+//
+//
+//        AcDbGripData* gripdata = static_cast<AcDbGripData*> (gripAppData.at(i));
+//
+//        switch (idx)
+//        {
+//            case 0:
+//            {
+//                setCenter(center() + offset);
+//            } break;
+//
+//            case 1:
+//            {
+//                oldquad = center() + AcGeVector3d(radius(), 0, 0);
+//                newquad = oldquad + offset;
+//                scaleRadius(newquad.distanceTo(center()));
+//            } break;
+//
+//            case 2:
+//            {
+//                oldquad = center() + AcGeVector3d(0, radius(), 0);
+//                newquad = oldquad + offset;
+//                scaleRadius(newquad.distanceTo(center()));
+//            } break;
+//
+//            case 3:
+//            {
+//                oldquad = center() - AcGeVector3d(radius(), 0, 0);
+//                newquad = oldquad + offset;
+//                scaleRadius(newquad.distanceTo(center()));
+//            } break;
+//
+//            case 4:
+//            {
+//                oldquad = center() - AcGeVector3d(0, radius(), 0);
+//                newquad = oldquad + offset;
+//                scaleRadius(newquad.distanceTo(center()));
+//            } break;
+//            case 5:
+//            {
+//                setMouth(mouthLeft() + offset, mouthBottom(), mouthRight());
+//                ensureRadiusMouth();
+//            } break;
+//
+//            case 6:
+//            {
+//                setMouth(mouthLeft(), mouthBottom(), mouthRight() + offset);
+//                ensureRadiusMouth();
+//            } break;
+//
+//            case 7:
+//            {
+//                setMouth(mouthLeft(), mouthBottom() + offset, mouthRight());
+//                ensureRadiusMouth();
+//            } break;
+//
+//            case 8:
+//            {
+//                setMouth(mouthLeft() + offset, mouthBottom() + offset, mouthRight() + offset);
+//                ensureRadiusMouth();
+//            } break;
+//
+//            case 9:
+//            case 14:
+//            {
+//                AcGePoint3d eyecen;
+//
+//                if (idx == 9)
+//                    eyecen = leftEyeCenter();
+//                else
+//                    eyecen = rightEyeCenter();
+//
+//                if (m_eyesheight + offset.x < 0)
+//                    setEyesHeight(0);
+//                else
+//                    setEyesHeight(m_eyesheight + offset.y);
+//
+//                if (eyecen.x < center().x) // left eye
+//                {
+//                    if (m_eyesapart - (offset.x * 2) < m_eyesize * 2)
+//                        setEyesApart(m_eyesize * 2);
+//                    else
+//                        setEyesApart(m_eyesapart - (offset.x * 2));
+//                }
+//                else // right eye
+//                {
+//                    if (m_eyesapart + (offset.x * 2) < m_eyesize * 2)
+//                        setEyesApart(m_eyesize * 2);
+//                    else
+//                        setEyesApart(m_eyesapart + (offset.x * 2));
+//                }
+//
+//                ensureRadiusEyes();
+//            } break;
+//
+//            case 10:
+//            case 15:
+//            {
+//                AcGePoint3d eyecen;
+//
+//                if (idx == 10)
+//                    eyecen = leftEyeCenter();
+//                else
+//                    eyecen = rightEyeCenter();
+//
+//                oldquad = eyecen + AcGeVector3d(m_eyesize, 0, 0);
+//                newquad = oldquad + offset;
+//
+//                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                    setEyeSize(m_eyesapart / 2);
+//                else
+//                    setEyeSize(newquad.distanceTo(eyecen));
+//
+//                ensureRadiusEyes();
+//            } break;
+//
+//            case 11:
+//            case 16:
+//            {
+//                AcGePoint3d eyecen;
+//
+//                if (idx == 11)
+//                    eyecen = leftEyeCenter();
+//                else
+//                    eyecen = rightEyeCenter();
+//
+//                oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+//                newquad = oldquad + offset;
+//
+//                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                    setEyeSize(m_eyesapart / 2);
+//                else
+//                    setEyeSize(newquad.distanceTo(eyecen));
+//
+//                ensureRadiusEyes();
+//            } break;
+//
+//            case 12:
+//            case 17:
+//            {
+//                AcGePoint3d eyecen;
+//
+//                if (idx == 12)
+//                    eyecen = leftEyeCenter();
+//                else
+//                    eyecen = rightEyeCenter();
+//
+//                oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+//                newquad = oldquad + offset;
+//
+//                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                    setEyeSize(m_eyesapart / 2);
+//                else
+//                    setEyeSize(newquad.distanceTo(eyecen));
+//
+//                ensureRadiusEyes();
+//            } break;
+//
+//            case 13:
+//            case 18:
+//            {
+//                AcGePoint3d eyecen;
+//
+//                if (idx == 18)
+//                    eyecen = leftEyeCenter();
+//                else
+//                    eyecen = rightEyeCenter();
+//
+//                oldquad = eyecen - AcGeVector3d(0, m_eyesize, 0);
+//                newquad = oldquad + offset;
+//
+//                if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                    setEyeSize(m_eyesapart / 2);
+//                else
+//                    setEyeSize(newquad.distanceTo(eyecen));
+//
+//                ensureRadiusEyes();
+//            } break;
+//        }
+//    }
+//
+//    return eOk;
+//}
+//
 
 //==================================================================================================//
 
-Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbIntArray& indices, const AcGeVector3d& offset)
-{
-    assertWriteEnabled();
-    int idx, count = indices.length();
-    AcGePoint3d idxpoint;
-    AcGePoint3d oldquad, newquad;
-
-    for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
-    {
-        idx = indices[i];
-
-        switch (idx)
-        {
-        case 0:
-        {
-            setCenter(center() + offset);
-        } break;
-
-        case 1:
-        {
-            oldquad = center() + AcGeVector3d(radius(), 0, 0);
-            newquad = oldquad + offset;
-            scaleRadius(newquad.distanceTo(center()));
-        } break;
-
-        case 2:
-        {
-            oldquad = center() + AcGeVector3d(0, radius(), 0);
-            newquad = oldquad + offset;
-            scaleRadius(newquad.distanceTo(center()));
-        } break;
-
-        case 3:
-        {
-            oldquad = center() - AcGeVector3d(radius(), 0, 0);
-            newquad = oldquad + offset;
-            scaleRadius(newquad.distanceTo(center()));
-        } break;
-
-        case 4:
-        {
-            oldquad = center() - AcGeVector3d(0, radius(), 0);
-            newquad = oldquad + offset;
-            scaleRadius(newquad.distanceTo(center()));
-        } break;
-        case 5:
-        {
-            setMouth(mouthLeft() + offset, mouthBottom(), mouthRight());
-            ensureRadiusMouth();
-        } break;
-
-        case 6:
-        {
-            setMouth(mouthLeft(), mouthBottom(), mouthRight() + offset);
-            ensureRadiusMouth();
-        } break;
-
-        case 7:
-        {
-            setMouth(mouthLeft(), mouthBottom() + offset, mouthRight());
-            ensureRadiusMouth();
-        } break;
-
-        case 8:
-        {
-            setMouth(mouthLeft() + offset, mouthBottom() + offset, mouthRight() + offset);
-            ensureRadiusMouth();
-        } break;
-
-        case 9:
-        case 14:
-        {
-            AcGePoint3d eyecen;
-
-            if (idx == 9)
-                eyecen = leftEyeCenter();
-            else
-                eyecen = rightEyeCenter();
-
-            if (m_eyesheight + offset.x < 0)
-                setEyesHeight(0);
-            else
-                setEyesHeight(m_eyesheight + offset.y);
-
-            if (eyecen.x < center().x) // left eye
-            {
-                if (m_eyesapart - (offset.x * 2) < m_eyesize * 2)
-                    setEyesApart(m_eyesize * 2);
-                else
-                    setEyesApart(m_eyesapart - (offset.x * 2));
-            }
-            else // right eye
-            {
-                if (m_eyesapart + (offset.x * 2) < m_eyesize * 2)
-                    setEyesApart(m_eyesize * 2);
-                else
-                    setEyesApart(m_eyesapart + (offset.x * 2));
-            }
-
-            ensureRadiusEyes();
-        } break;
-
-        case 10:
-        case 15:
-        {
-            AcGePoint3d eyecen;
-
-            if (idx == 10)
-                eyecen = leftEyeCenter();
-            else
-                eyecen = rightEyeCenter();
-
-            oldquad = eyecen + AcGeVector3d(m_eyesize, 0, 0);
-            newquad = oldquad + offset;
-
-            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                setEyeSize(m_eyesapart / 2);
-            else
-                setEyeSize(newquad.distanceTo(eyecen));
-
-            ensureRadiusEyes();
-        } break;
-
-        case 11:
-        case 16:
-        {
-            AcGePoint3d eyecen;
-
-            if (idx == 11)
-                eyecen = leftEyeCenter();
-            else
-                eyecen = rightEyeCenter();
-
-            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
-            newquad = oldquad + offset;
-
-            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                setEyeSize(m_eyesapart / 2);
-            else
-                setEyeSize(newquad.distanceTo(eyecen));
-
-            ensureRadiusEyes();
-        } break;
-
-        case 12:
-        case 17:
-        {
-            AcGePoint3d eyecen;
-
-            if (idx == 12)
-                eyecen = leftEyeCenter();
-            else
-                eyecen = rightEyeCenter();
-
-            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
-            newquad = oldquad + offset;
-
-            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                setEyeSize(m_eyesapart / 2);
-            else
-                setEyeSize(newquad.distanceTo(eyecen));
-
-            ensureRadiusEyes();
-        } break;
-
-        case 13:
-        case 18:
-        {
-            AcGePoint3d eyecen;
-
-            if (idx == 18)
-                eyecen = leftEyeCenter();
-            else
-                eyecen = rightEyeCenter();
-
-            oldquad = eyecen - AcGeVector3d(0, m_eyesize, 0);
-            newquad = oldquad + offset;
-
-            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
-                setEyeSize(m_eyesapart / 2);
-            else
-                setEyeSize(newquad.distanceTo(eyecen));
-
-            ensureRadiusEyes();
-        } break;
-        }
-    }
-
-    return eOk;
-}
+//Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbIntArray& indices, const AcGeVector3d& offset)
+//{
+//    assertWriteEnabled();
+//    int idx, count = indices.length();
+//    AcGePoint3d idxpoint;
+//    AcGePoint3d oldquad, newquad;
+//
+//    for (int i = 0; i < count; i++)		// a few grip points can be selected concurrently
+//    {
+//        idx = indices[i];
+//
+//        switch (idx)
+//        {
+//        case 0:
+//        {
+//            setCenter(center() + offset);
+//        } break;
+//
+//        case 1:
+//        {
+//            oldquad = center() + AcGeVector3d(radius(), 0, 0);
+//            newquad = oldquad + offset;
+//            scaleRadius(newquad.distanceTo(center()));
+//        } break;
+//
+//        case 2:
+//        {
+//            oldquad = center() + AcGeVector3d(0, radius(), 0);
+//            newquad = oldquad + offset;
+//            scaleRadius(newquad.distanceTo(center()));
+//        } break;
+//
+//        case 3:
+//        {
+//            oldquad = center() - AcGeVector3d(radius(), 0, 0);
+//            newquad = oldquad + offset;
+//            scaleRadius(newquad.distanceTo(center()));
+//        } break;
+//
+//        case 4:
+//        {
+//            oldquad = center() - AcGeVector3d(0, radius(), 0);
+//            newquad = oldquad + offset;
+//            scaleRadius(newquad.distanceTo(center()));
+//        } break;
+//        case 5:
+//        {
+//            setMouth(mouthLeft() + offset, mouthBottom(), mouthRight());
+//            ensureRadiusMouth();
+//        } break;
+//
+//        case 6:
+//        {
+//            setMouth(mouthLeft(), mouthBottom(), mouthRight() + offset);
+//            ensureRadiusMouth();
+//        } break;
+//
+//        case 7:
+//        {
+//            setMouth(mouthLeft(), mouthBottom() + offset, mouthRight());
+//            ensureRadiusMouth();
+//        } break;
+//
+//        case 8:
+//        {
+//            setMouth(mouthLeft() + offset, mouthBottom() + offset, mouthRight() + offset);
+//            ensureRadiusMouth();
+//        } break;
+//
+//        case 9:
+//        case 14:
+//        {
+//            AcGePoint3d eyecen;
+//
+//            if (idx == 9)
+//                eyecen = leftEyeCenter();
+//            else
+//                eyecen = rightEyeCenter();
+//
+//            if (m_eyesheight + offset.x < 0)
+//                setEyesHeight(0);
+//            else
+//                setEyesHeight(m_eyesheight + offset.y);
+//
+//            if (eyecen.x < center().x) // left eye
+//            {
+//                if (m_eyesapart - (offset.x * 2) < m_eyesize * 2)
+//                    setEyesApart(m_eyesize * 2);
+//                else
+//                    setEyesApart(m_eyesapart - (offset.x * 2));
+//            }
+//            else // right eye
+//            {
+//                if (m_eyesapart + (offset.x * 2) < m_eyesize * 2)
+//                    setEyesApart(m_eyesize * 2);
+//                else
+//                    setEyesApart(m_eyesapart + (offset.x * 2));
+//            }
+//
+//            ensureRadiusEyes();
+//        } break;
+//
+//        case 10:
+//        case 15:
+//        {
+//            AcGePoint3d eyecen;
+//
+//            if (idx == 10)
+//                eyecen = leftEyeCenter();
+//            else
+//                eyecen = rightEyeCenter();
+//
+//            oldquad = eyecen + AcGeVector3d(m_eyesize, 0, 0);
+//            newquad = oldquad + offset;
+//
+//            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                setEyeSize(m_eyesapart / 2);
+//            else
+//                setEyeSize(newquad.distanceTo(eyecen));
+//
+//            ensureRadiusEyes();
+//        } break;
+//
+//        case 11:
+//        case 16:
+//        {
+//            AcGePoint3d eyecen;
+//
+//            if (idx == 11)
+//                eyecen = leftEyeCenter();
+//            else
+//                eyecen = rightEyeCenter();
+//
+//            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+//            newquad = oldquad + offset;
+//
+//            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                setEyeSize(m_eyesapart / 2);
+//            else
+//                setEyeSize(newquad.distanceTo(eyecen));
+//
+//            ensureRadiusEyes();
+//        } break;
+//
+//        case 12:
+//        case 17:
+//        {
+//            AcGePoint3d eyecen;
+//
+//            if (idx == 12)
+//                eyecen = leftEyeCenter();
+//            else
+//                eyecen = rightEyeCenter();
+//
+//            oldquad = eyecen - AcGeVector3d(m_eyesize, 0, 0);
+//            newquad = oldquad + offset;
+//
+//            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                setEyeSize(m_eyesapart / 2);
+//            else
+//                setEyeSize(newquad.distanceTo(eyecen));
+//
+//            ensureRadiusEyes();
+//        } break;
+//
+//        case 13:
+//        case 18:
+//        {
+//            AcGePoint3d eyecen;
+//
+//            if (idx == 18)
+//                eyecen = leftEyeCenter();
+//            else
+//                eyecen = rightEyeCenter();
+//
+//            oldquad = eyecen - AcGeVector3d(0, m_eyesize, 0);
+//            newquad = oldquad + offset;
+//
+//            if (newquad.distanceTo(eyecen) > m_eyesapart / 2)
+//                setEyeSize(m_eyesapart / 2);
+//            else
+//                setEyeSize(newquad.distanceTo(eyecen));
+//
+//            ensureRadiusEyes();
+//        } break;
+//        }
+//    }
+//
+//    return eOk;
+//}
 
 //==================================================================================================//
 
