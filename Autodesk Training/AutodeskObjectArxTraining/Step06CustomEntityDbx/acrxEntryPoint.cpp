@@ -24,16 +24,16 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "resource.h"
-#include "utc_EmployeeDetails.h"
+#include "utc_customEntityStep6.h"
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("utc")
 
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
-class CStep05CustObjDbxApp : public AcRxDbxApp {
+class CStep06CustEntDbxApp : public AcRxDbxApp {
 
 public:
-	CStep05CustObjDbxApp () : AcRxDbxApp () {}
+	CStep06CustEntDbxApp () : AcRxDbxApp () {}
 
 	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
 		// TODO: Load dependencies here
@@ -42,7 +42,11 @@ public:
 		AcRx::AppRetCode retCode =AcRxDbxApp::On_kInitAppMsg (pkt) ;
 		
 		// TODO: Add your initialization code here
-		acrxRegisterService(ASDKEMPLOYEEDETAILS_DBXSERVICE);
+
+		// TODO: Add your initialization code here
+		acrxRegisterService(UTC_CUSTOMENTITYSTEP6_DBXSERVICE);
+
+
 
 
 		return (retCode) ;
@@ -55,7 +59,7 @@ public:
 		AcRx::AppRetCode retCode =AcRxDbxApp::On_kUnloadAppMsg (pkt) ;
 
 		// TODO: Unload dependencies here
-		delete acrxServiceDictionary->remove(ASDKEMPLOYEEDETAILS_DBXSERVICE);
+		delete acrxServiceDictionary->remove(UTC_CUSTOMENTITYSTEP6_DBXSERVICE);
 
 		return (retCode) ;
 	}
@@ -70,5 +74,5 @@ public:
 } ;
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjDbxApp)
+IMPLEMENT_ARX_ENTRYPOINT(CStep06CustEntDbxApp)
 

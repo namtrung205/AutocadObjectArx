@@ -33,7 +33,7 @@ ACRX_DXF_DEFINE_MEMBERS (
 	utc_customEntityStep6, AcDbEllipse,
 	AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent, 
 	AcDbProxyEntity::kNoOperation, UTC_CUSTOMENTITYSTEP6,
-UTCSTEP05CUSTOBJDBXAPP
+UTCStep06CustEntDbxApp
 |Product Desc:     A description for your object
 |Company:          Your company name
 |WEB Address:      Your company WEB site address

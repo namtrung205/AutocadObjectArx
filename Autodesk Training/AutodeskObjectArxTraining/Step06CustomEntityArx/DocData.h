@@ -20,55 +20,21 @@
 //
 
 //-----------------------------------------------------------------------------
-//----- acrxEntryPoint.cpp
+//----- DocData.h : include file for document specific data. An instance of this
+//----- class is automatically created and managed by the AsdkDataManager class.
+//----- See the AsdkDmgr.h / DocData.cpp for more datails
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
-#include "resource.h"
-#include "utc_EmployeeDetails.h"
-//-----------------------------------------------------------------------------
-#define szRDS _RXST("utc")
+#pragma once
 
 //-----------------------------------------------------------------------------
-//----- ObjectARX EntryPoint
-class CStep05CustObjDbxApp : public AcRxDbxApp {
+//----- Here you can store the document / database related data.
+class CDocData {
+
+	//----- TODO: here you can add your variables
 
 public:
-	CStep05CustObjDbxApp () : AcRxDbxApp () {}
+	CDocData () ;
+	CDocData (const CDocData &data) ;
+	~CDocData () ;
 
-	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
-		// TODO: Load dependencies here
-
-		// You *must* call On_kInitAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kInitAppMsg (pkt) ;
-		
-		// TODO: Add your initialization code here
-		acrxRegisterService(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-
-		return (retCode) ;
-	}
-
-	virtual AcRx::AppRetCode On_kUnloadAppMsg (void *pkt) {
-		// TODO: Add your code here
-
-		// You *must* call On_kUnloadAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kUnloadAppMsg (pkt) ;
-
-		// TODO: Unload dependencies here
-		delete acrxServiceDictionary->remove(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-		return (retCode) ;
-	}
-
-	virtual void RegisterServerComponents () 
-	{
-	
-	
-	
-	}
-	
 } ;
-
-//-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjDbxApp)
-

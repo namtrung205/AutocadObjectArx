@@ -20,55 +20,24 @@
 //
 
 //-----------------------------------------------------------------------------
-//----- acrxEntryPoint.cpp
+//----- DocData.cpp : Implementation file
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "resource.h"
-#include "utc_EmployeeDetails.h"
-//-----------------------------------------------------------------------------
-#define szRDS _RXST("utc")
 
 //-----------------------------------------------------------------------------
-//----- ObjectARX EntryPoint
-class CStep05CustObjDbxApp : public AcRxDbxApp {
-
-public:
-	CStep05CustObjDbxApp () : AcRxDbxApp () {}
-
-	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
-		// TODO: Load dependencies here
-
-		// You *must* call On_kInitAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kInitAppMsg (pkt) ;
-		
-		// TODO: Add your initialization code here
-		acrxRegisterService(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-
-		return (retCode) ;
-	}
-
-	virtual AcRx::AppRetCode On_kUnloadAppMsg (void *pkt) {
-		// TODO: Add your code here
-
-		// You *must* call On_kUnloadAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kUnloadAppMsg (pkt) ;
-
-		// TODO: Unload dependencies here
-		delete acrxServiceDictionary->remove(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-		return (retCode) ;
-	}
-
-	virtual void RegisterServerComponents () 
-	{
-	
-	
-	
-	}
-	
-} ;
+//----- The one and only document manager object. You can use the DocVars object to retrieve
+//----- document specific data throughout your application
+AcApDataManager<CDocData> DocVars ;
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjDbxApp)
+//----- Implementation of the document data class.
+CDocData::CDocData () {
+}
 
+//-----------------------------------------------------------------------------
+CDocData::CDocData (const CDocData &data) {
+}
+
+//-----------------------------------------------------------------------------
+CDocData::~CDocData () {
+}

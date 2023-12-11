@@ -25,8 +25,6 @@
 #include "StdAfx.h"
 #include "resource.h"
 #include "utc_EmployeeDetails.h"
-#include "utc_customEntityStep6.h"
-#include "utc_Smiley.h"
 
 
 //-----------------------------------------------------------------------------
@@ -61,7 +59,8 @@ public:
 		return (retCode) ;
 	}
 
-	virtual void RegisterServerComponents () {
+	virtual void RegisterServerComponents () 
+	{
 	}
 	
 
@@ -312,91 +311,12 @@ public:
 
 	}
 
+
 	static void utcMyGroup_REMOVEDETAIL() {
 		// Put your command code here
-
-	}
-
-	static void utcMyGroup_CREATEEMPLOYEE() 
-	{
-		// Put your command code here
-		//Get Point
-		ads_point pt;
-		ads_point pt_res;
-
-		acedGetPoint(pt,_T("Select point..."), pt_res);
-
-		asPnt3d(pt_res);
-		utc_customEntityStep6* cusEnt6 = new utc_customEntityStep6;
-		cusEnt6->setID(3);
-		cusEnt6->setCube(3);
-		cusEnt6->setFirstName(_T("fName"));
-		cusEnt6->setLastName(_T("lName"));
-
-		//Add entity to model space
-		{
-			//Check name exists
-			AcDbDatabase* pDb = acdbHostApplicationServices()->workingDatabase();
-			if (pDb != NULL)
-			{
-				AcDbObjectId modelId;
-				modelId = acdbSymUtil()->blockModelSpaceId(pDb);
-				AcDbBlockTableRecord* pBlockTableRecordModel;
-
-				acdbOpenAcDbObject((AcDbObject*&)pBlockTableRecordModel, modelId, AcDb::kForRead);
-
-				if (pBlockTableRecordModel != NULL)
-				{
-					pBlockTableRecordModel->upgradeOpen();
-					pBlockTableRecordModel->appendAcDbEntity(cusEnt6);
-					pBlockTableRecordModel->close();
-				}
-			}
-
-		}
-	
-		cusEnt6->close();
 	}
 
 
-
-	static void utcMyGroup_CREATESMILEY()
-	{
-		// Put your command code here
-		//Get Point
-		ads_point pt;
-		ads_point pt_res;
-
-		acedGetPoint(pt, _T("Select point..."), pt_res);
-		AcGePoint3d cenPt = asPnt3d(pt_res);
-
-		utc_Smiley* pSmile = new utc_Smiley();
-		pSmile->setCenter(cenPt);
-
-
-		//Add entity to model space
-		{
-			//Check name exists
-			AcDbDatabase* pDb = acdbHostApplicationServices()->workingDatabase();
-			if (pDb != NULL)
-			{
-				AcDbObjectId modelId;
-				modelId = acdbSymUtil()->blockModelSpaceId(pDb);
-				AcDbBlockTableRecord* pBlockTableRecordModel;
-
-				acdbOpenAcDbObject((AcDbObject*&)pBlockTableRecordModel, modelId, AcDb::kForRead);
-
-				if (pBlockTableRecordModel != NULL)
-				{
-					pBlockTableRecordModel->upgradeOpen();
-					pBlockTableRecordModel->appendAcDbEntity(pSmile);
-					pBlockTableRecordModel->close();
-				}
-			}
-
-		}
-		pSmile->close();
-	}
 
 } ;
 
@@ -406,7 +326,5 @@ IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjArxApp)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _ADDDETAIL, _ADDDETAIL, ACRX_CMD_MODAL, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _LISTDETAILS, _LISTDETAILS, ACRX_CMD_MODAL, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _REMOVEDETAIL, _REMOVEDETAIL, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _CREATEEMPLOYEE, _CREATEEMPLOYEE, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _CREATESMILEY, _CREATESMILEY, ACRX_CMD_MODAL, NULL)
 
 

@@ -20,55 +20,22 @@
 //
 
 //-----------------------------------------------------------------------------
-//----- acrxEntryPoint.cpp
+//- Step05CustObjDbx.cpp : Initialization functions
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "resource.h"
-#include "utc_EmployeeDetails.h"
-//-----------------------------------------------------------------------------
-#define szRDS _RXST("utc")
 
 //-----------------------------------------------------------------------------
-//----- ObjectARX EntryPoint
-class CStep05CustObjDbxApp : public AcRxDbxApp {
+//- DLL Entry Point
+extern "C"
+BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved) {
+	//- Remove this if you use lpReserved
+	UNREFERENCED_PARAMETER(lpReserved) ;
 
-public:
-	CStep05CustObjDbxApp () : AcRxDbxApp () {}
-
-	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
-		// TODO: Load dependencies here
-
-		// You *must* call On_kInitAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kInitAppMsg (pkt) ;
-		
-		// TODO: Add your initialization code here
-		acrxRegisterService(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-
-		return (retCode) ;
+	if ( dwReason == DLL_PROCESS_ATTACH ) {
+        _hdllInstance =hInstance ;
+	} else if ( dwReason == DLL_PROCESS_DETACH ) {
 	}
-
-	virtual AcRx::AppRetCode On_kUnloadAppMsg (void *pkt) {
-		// TODO: Add your code here
-
-		// You *must* call On_kUnloadAppMsg here
-		AcRx::AppRetCode retCode =AcRxDbxApp::On_kUnloadAppMsg (pkt) ;
-
-		// TODO: Unload dependencies here
-		delete acrxServiceDictionary->remove(ASDKEMPLOYEEDETAILS_DBXSERVICE);
-
-		return (retCode) ;
-	}
-
-	virtual void RegisterServerComponents () 
-	{
-	
-	
-	
-	}
-	
-} ;
-
-//-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjDbxApp)
+	return (TRUE) ;
+}
 

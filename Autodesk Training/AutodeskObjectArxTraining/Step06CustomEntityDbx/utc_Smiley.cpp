@@ -17,7 +17,7 @@ ACRX_DXF_DEFINE_MEMBERS (
 	utc_Smiley, AcDbEntity,
 	AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent, 
 	AcDbProxyEntity::kNoOperation, UTC_SMILEY,
-UTCSTEP05CUSTOBJDBXAPP
+UTCStep06CustEntDbxApp
 |Product Desc:     A description for your object
 |Company:          Your company name
 |WEB Address:      Your company WEB site address

@@ -81,21 +81,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Step05CustObjDbx.cpp" />
-    <ClCompile Include="utc_customEntityStep6.cpp" />
     <ClCompile Include="utc_EmployeeDetails.cpp" />
-    <ClCompile Include="utc_Smiley.cpp" />
-    <ClCompile Include="utc_SmileyIO.cpp" />
-    <ClCompile Include="utc_SmileyOther.cpp" />
-    <ClCompile Include="utc_Smiley_DbProperty.cpp" />
-    <ClCompile Include="utc_Smiley_DbTransform.cpp" />
-    <ClCompile Include="utc_TriangleGripData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="utc_customEntityStep6.h" />
     <ClInclude Include="utc_EmployeeDetails.h" />
-    <ClInclude Include="utc_Smiley.h" />
     <ClInclude Include="utc_TriangleGripData.h" />
   </ItemGroup>
   <ItemGroup>

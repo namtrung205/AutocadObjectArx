@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by Step06CustEntDbx.rc
+// Used by Step05CustObjDbx.rc
 //
 #define IDS_PROJNAME 100
 
