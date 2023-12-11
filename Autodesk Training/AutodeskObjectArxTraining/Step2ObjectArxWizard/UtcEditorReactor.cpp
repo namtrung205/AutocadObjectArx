@@ -23,7 +23,7 @@
 //----- D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Autodesk Training\AutodeskObjectArxTraining\Step2ObjectArxWizard\UtcEditorReactor.cpp : Implementation of UTC
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Autodesk Training\AutodeskObjectArxTraining\Step2ObjectArxWizard\UtcEditorReactor.h"
+#include "UtcEditorReactor.h"
 
 //-----------------------------------------------------------------------------
 UtcEditorReactor::UtcEditorReactor (const bool autoInitAndRelease) : AcEditorReactor(), mbAutoInitAndRelease(autoInitAndRelease) {
