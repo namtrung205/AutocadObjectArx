@@ -34,10 +34,10 @@
 
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
-class CStep5CustObjArxApp : public AcRxArxApp {
+class CStep05CustObjArxApp : public AcRxArxApp {
 
 public:
-	CStep5CustObjArxApp () : AcRxArxApp () {}
+	CStep05CustObjArxApp () : AcRxArxApp () {}
 
 	virtual AcRx::AppRetCode On_kInitAppMsg (void *pkt) {
 		// TODO: Load dependencies here
@@ -401,12 +401,12 @@ public:
 } ;
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(CStep5CustObjArxApp)
+IMPLEMENT_ARX_ENTRYPOINT(CStep05CustObjArxApp)
 
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _ADDDETAIL, _ADDDETAIL, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _LISTDETAILS, _LISTDETAILS, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _REMOVEDETAIL, _REMOVEDETAIL, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _CREATEEMPLOYEE, _CREATEEMPLOYEE, ACRX_CMD_MODAL, NULL)
-ACED_ARXCOMMAND_ENTRY_AUTO(CStep5CustObjArxApp, utcMyGroup, _CREATESMILEY, _CREATESMILEY, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _ADDDETAIL, _ADDDETAIL, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _LISTDETAILS, _LISTDETAILS, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _REMOVEDETAIL, _REMOVEDETAIL, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _CREATEEMPLOYEE, _CREATEEMPLOYEE, ACRX_CMD_MODAL, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep05CustObjArxApp, utcMyGroup, _CREATESMILEY, _CREATESMILEY, ACRX_CMD_MODAL, NULL)
 
 

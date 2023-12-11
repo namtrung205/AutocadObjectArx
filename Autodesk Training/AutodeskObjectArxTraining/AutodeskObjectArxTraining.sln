@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Step5CustomObj", "Step5Cust
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step05CustObjDbx", "Step05CustObjDbx\Step05CustObjDbx.vcxproj", "{7324A722-772D-4D7F-B5A6-2B4AA9B84C56}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step5CustObjArx", "Step5CustObjArx\Step5CustObjArx.vcxproj", "{49F0230E-1D0B-4FBB-A946-FB7B6341D869}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Step06CustomEntity", "Step06CustomEntity", "{311E1FDF-E7B0-4650-9E0D-29AAE20AC577}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Step05CustObjArx", "Step05CustObjArx\Step05CustObjArx.vcxproj", "{49F0230E-1D0B-4FBB-A946-FB7B6341D869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

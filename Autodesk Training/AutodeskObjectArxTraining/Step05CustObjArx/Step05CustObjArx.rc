@@ -60,12 +60,12 @@ BEGIN
 		BLOCK "040904B0"
 		BEGIN
 			VALUE "CompanyName", "\0"
-			VALUE "FileDescription", "Step5CustObjArx ObjectARX application\0"
+			VALUE "FileDescription", "Step05CustObjArx ObjectARX application\0"
 			VALUE "FileVersion", "1, 0, 0, 1\0"
-			VALUE "InternalName", "Step5CustObjArx\0"
-			VALUE "LegalCopyright", "Copyright © 2012\0"
-			VALUE "OriginalFilename", "utcStep5CustObjArx.arx\0"
-			VALUE "ProductName", "Step5CustObjArx Application\0"
+			VALUE "InternalName", "Step05CustObjArx\0"
+			VALUE "LegalCopyright", "Copyright ï¿½ 2012\0"
+			VALUE "OriginalFilename", "utcStep05CustObjArx.arx\0"
+			VALUE "ProductName", "Step05CustObjArx Application\0"
 			VALUE "ProductVersion", "1, 0, 0, 1\0"
 		END
 	END
@@ -84,7 +84,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-	IDS_PROJNAME					"Step5CustObjArx"
+	IDS_PROJNAME					"Step05CustObjArx"
 END
 
 

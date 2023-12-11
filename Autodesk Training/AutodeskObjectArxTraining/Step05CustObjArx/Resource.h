@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by Step5CustObjArx.rc
+// Used by Step05CustObjArx.rc
 //
 #define IDS_PROJNAME 100
 

@@ -20,7 +20,7 @@
 //
 
 //-----------------------------------------------------------------------------
-//- Step5CustObjArx.cpp : Initialization functions
+//- Step05CustObjArx.cpp : Initialization functions
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "resource.h"
@@ -28,7 +28,7 @@
 
 //-----------------------------------------------------------------------------
 //- Define the sole extension module object.
-AC_IMPLEMENT_EXTENSION_MODULE(Step5CustObjArxDLL)
+AC_IMPLEMENT_EXTENSION_MODULE(Step05CustObjArxDLL)
 //- Now you can use the CAcModuleResourceOverride class in
 //- your application to switch to the correct resource instance.
 //- Please see the ObjectARX Documentation for more details
@@ -42,10 +42,10 @@ BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved) {
 
 	if ( dwReason == DLL_PROCESS_ATTACH ) {
         _hdllInstance =hInstance ;
-		Step5CustObjArxDLL.AttachInstance (hInstance) ;
+		Step05CustObjArxDLL.AttachInstance (hInstance) ;
 		InitAcUiDLL () ;
 	} else if ( dwReason == DLL_PROCESS_DETACH ) {
-		Step5CustObjArxDLL.DetachInstance () ;
+		Step05CustObjArxDLL.DetachInstance () ;
 	}
 	return (TRUE) ;
 }
