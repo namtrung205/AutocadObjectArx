@@ -50,6 +50,9 @@
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v141'">v141</PlatformToolset>
     <PlatformToolset Condition="'$(ArxSDKPlatform)'=='v142'">v142</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VCToolsVersion />
+  </PropertyGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
   <ItemDefinitionGroup>
@@ -66,7 +69,7 @@
     <Link>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Autodesk Training\AutodeskObjectArxTraining\Step05CustObjDbx\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">utcStep05CustObjDbx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link>

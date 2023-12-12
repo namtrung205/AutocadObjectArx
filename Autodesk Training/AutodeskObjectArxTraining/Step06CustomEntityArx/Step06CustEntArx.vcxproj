@@ -66,7 +66,7 @@
     <Link>
     </Link>
     <Link>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Autodesk Training\AutodeskObjectArxTraining\Step06CustomEntityDbx\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">utcStep06CustEntDbx.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Link>

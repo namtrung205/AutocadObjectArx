@@ -68,6 +68,7 @@
     </Link>
     <Link>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">acgeoment.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

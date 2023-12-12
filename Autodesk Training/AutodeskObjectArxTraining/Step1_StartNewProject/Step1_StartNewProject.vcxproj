@@ -122,14 +122,14 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DiagnosticsFormat>Classic</DiagnosticsFormat>
-      <AdditionalIncludeDirectories>D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\inc;D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../Libs/Autocad SDK/ObjectArx 2021/inc;../../../Libs/Autocad SDK/ObjectArx 2021/inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;D:\Github\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>rxapi.lib;acdb24.lib;acge24.lib;acad.lib;ac1st24.lib;accore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>ArxProject.def</ModuleDefinitionFile>
     </Link>
