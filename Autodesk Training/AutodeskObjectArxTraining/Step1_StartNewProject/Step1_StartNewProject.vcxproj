@@ -129,7 +129,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\..\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;D:\Github\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>rxapi.lib;acdb24.lib;acge24.lib;acad.lib;ac1st24.lib;accore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>ArxProject.def</ModuleDefinitionFile>
     </Link>
