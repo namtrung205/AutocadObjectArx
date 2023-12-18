@@ -41,9 +41,6 @@
     <ClInclude Include="utc_EmployeeDetails.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utc_TriangleGripData.h">
-      <Filter>Header Files\GripData</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Step05CustObjDbx.rc">

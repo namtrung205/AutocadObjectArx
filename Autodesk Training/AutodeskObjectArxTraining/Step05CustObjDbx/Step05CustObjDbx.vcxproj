@@ -88,7 +88,6 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="utc_EmployeeDetails.h" />
-    <ClInclude Include="utc_TriangleGripData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Step05CustObjDbx.rc" />

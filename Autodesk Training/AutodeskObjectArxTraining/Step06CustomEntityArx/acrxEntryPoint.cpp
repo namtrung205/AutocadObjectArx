@@ -26,11 +26,13 @@
 #include "resource.h"
 #include "utc_customEntityStep6.h"
 #include "utc_Smiley.h"
+#include "TreeMultiModesGripPE.h"
+#include <AdskTree.h>
 
 
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("utc")
-
+static AdskTreeMultiModesGripPE* pMyMultiModeGrips = NULL;
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
 class CStep06CustEntArxApp : public AcRxArxApp {
@@ -45,6 +47,16 @@ public:
 		AcRx::AppRetCode retCode =AcRxArxApp::On_kInitAppMsg (pkt) ;
 		
 		// TODO: Add your initialization code here
+		AdskTreeMultiModesGripPE::rxInit();
+		AdskTree::rxInit();
+		acrxBuildClassHierarchy();
+
+		// TODO: Add your initialization code here
+		if (pMyMultiModeGrips == NULL)
+		{
+			pMyMultiModeGrips = new AdskTreeMultiModesGripPE();
+			AdskTree::desc()->addX(AcDbMultiModesGripPE::desc(), pMyMultiModeGrips);
+		}
 
 		return (retCode) ;
 	}
@@ -56,6 +68,11 @@ public:
 		AcRx::AppRetCode retCode =AcRxArxApp::On_kUnloadAppMsg (pkt) ;
 
 		// TODO: Unload dependencies here
+		if (pMyMultiModeGrips != NULL)
+		{
+			delete pMyMultiModeGrips;
+			pMyMultiModeGrips = NULL;
+		}
 
 		return (retCode) ;
 	}
@@ -142,6 +159,64 @@ public:
 		pSmile->close();
 	}
 
+
+
+	// - AdskMultiModeGripSimpleSample.TREE command (do not rename)
+	static void AdskMultiModeGripSimpleSampleTREE(void)
+	{
+		ads_point pt;
+		if (RTNORM != acedGetPoint(NULL, L"\nSelect tree base point: ", pt))
+			return;
+
+		AcGePoint3d insertionPt = asPnt3d(pt);
+
+		AdskTree* pTree = new AdskTree();
+		pTree->setDatabaseDefaults();
+		pTree->setBasePoint(insertionPt);
+		PostToDb(pTree);
+	}
+
+	// Add the entity to DB
+	static Acad::ErrorStatus PostToDb(AcDbEntity* pEnt)
+	{
+		AcDbDatabase* pDb = acdbHostApplicationServices()->workingDatabase();
+		AcDbObjectId objId;
+
+		Acad::ErrorStatus      es;
+		AcDbBlockTable* pBlockTable;
+		AcDbBlockTableRecord* pSpaceRecord;
+
+		pDb->getBlockTable(pBlockTable, AcDb::kForRead);
+		pBlockTable->getAt(ACDB_MODEL_SPACE, pSpaceRecord, AcDb::kForWrite);
+		es = pSpaceRecord->appendAcDbEntity(objId, pEnt);
+		es = pEnt->close();
+		es = pSpaceRecord->close();
+		es = pBlockTable->close();
+
+		return es;
+	}
+
+	// Command  after the grip mode was changed. 
+	// This will ensure a graphics update for the custom entity.
+	static void AdskMultiModeGripSimpleSampleModeSwitchCmd(void)
+	{
+		AcDbObjectId entId = AdskTreeMultiModesGripPE::getLastModifiedEntId();
+
+		AcApDocument* pActiveDoc = acDocManager->mdiActiveDocument();
+		AcDbDatabase* pDb = pActiveDoc->database();
+
+		if (entId.isNull())
+			return;
+
+		AcDbEntity* pEnt = NULL;
+		acdbOpenAcDbEntity(pEnt, entId, AcDb::kForWrite);
+		pEnt->recordGraphicsModified();
+		pEnt->close();
+		acedUpdateDisplay();
+	}
+
+
+
 } ;
 
 //-----------------------------------------------------------------------------
@@ -151,4 +226,6 @@ IMPLEMENT_ARX_ENTRYPOINT(CStep06CustEntArxApp)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, utcMyGroup, _CREATEEMPLOYEE, _CREATEEMPLOYEE, ACRX_CMD_MODAL, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, utcMyGroup, _CREATESMILEY, _CREATESMILEY, ACRX_CMD_MODAL, NULL)
 
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, AdskMultiModeGripSimpleSample, TREE, TREE, ACRX_CMD_TRANSPARENT, NULL)
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, AdskMultiModeGripSimpleSample, ModeSwitchCmd, ModeSwitchCmd, ACRX_CMD_TRANSPARENT, NULL)
 

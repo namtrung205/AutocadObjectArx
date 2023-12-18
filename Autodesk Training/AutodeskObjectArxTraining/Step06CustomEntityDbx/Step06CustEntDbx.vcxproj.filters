@@ -57,6 +57,9 @@
     <ClCompile Include="utc_TriangleGripData.cpp">
       <Filter>Source Files\GripData</Filter>
     </ClCompile>
+    <ClCompile Include="AdskTree.cpp">
+      <Filter>Source Files\GripData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files\SmileyDB</Filter>
     </ClInclude>
     <ClInclude Include="utc_TriangleGripData.h">
+      <Filter>Header Files\GripData</Filter>
+    </ClInclude>
+    <ClInclude Include="AdskTree.h">
       <Filter>Header Files\GripData</Filter>
     </ClInclude>
   </ItemGroup>
