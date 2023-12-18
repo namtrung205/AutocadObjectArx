@@ -25,7 +25,7 @@
 //-      but are changed infrequently
 //-----------------------------------------------------------------------------
 #pragma once
-#define Step06CUSTOBJARX_MODULE
+#define Step06CUSTENTARX_MODULE
 
 /*#ifndef
 #define _ALLOW_RTCc_IN_STL

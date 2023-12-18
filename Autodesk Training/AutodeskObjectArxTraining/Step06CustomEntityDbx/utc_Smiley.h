@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
-#ifdef STEP05CUSTOBJDBX_MODULE
+#ifdef STEP06CUSTENTDBX_MODULE
 #define DLLIMPEXP __declspec(dllexport)
 #else
 //----- Note: we don't use __declspec(dllimport) here, because of the
@@ -250,7 +250,7 @@ public:
 
 } ;
 
-#ifdef STEP05CUSTOBJDBX_MODULE
+#ifdef STEP06CUSTENTDBX_MODULE
 ACDB_REGISTER_OBJECT_ENTRY_AUTO(utc_Smiley)
 #endif
 
