@@ -119,6 +119,19 @@ Acad::ErrorStatus utc_Smiley::subGetGripPoints(AcGePoint3dArray& gripPoints, AcD
     return eOk;
 }
 
+void vpDraw(AcDbGripData* pThis, AcGiViewportDraw* pWd,
+    const AcDbObjectId& entId, AcDbGripOperations::DrawType type,
+    AcGePoint3d* imageGripPoint, int gripSize)
+{
+    auto point = pThis->gripPoint();
+
+    pWd->subEntityTraits().setColor(3);
+     pWd->geometry().circle(point, gripSize, AcGeVector3d(0, 0, 1));
+
+     return;
+}
+
+
 //==================================================================================================//
 
 Acad::ErrorStatus utc_Smiley::subGetGripPoints(
@@ -128,9 +141,22 @@ Acad::ErrorStatus utc_Smiley::subGetGripPoints(
 {
     assertReadEnabled();
 
+    //create a new gripPoint
+    AcDbGripData* pGripData = new AcDbGripData();
+    AcGePoint3d cen(center());
+    pGripData->setGripPoint(cen);
+
+    pGripData->setViewportDraw(vpDraw);
+    pGripData->setGizmosEnabled(true);
+
+
+    grips.append(pGripData);
+
+    //Acad::ErrorStatus ret = AcDbEntity::subGetGripPoints(grips, curViewUnitSize, gripSize, curViewDir, bitflags);
+
     //----- This method is never called unless you return eNotImplemented 
     //----- from the new getGripPoints() method below (which is the default implementation)
-    return (AcDbEntity::subGetGripPoints(grips, curViewUnitSize, gripSize, curViewDir, bitflags));
+    return Acad::ErrorStatus::eOk;
 }
 
 //==================================================================================================//
@@ -330,7 +356,8 @@ Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbIntArray& indices, c
 
 Acad::ErrorStatus utc_Smiley::subMoveGripPointsAt(const AcDbVoidPtrArray& gripAppData, const AcGeVector3d& offset, const int bitflags)
 {
-    return AcDbEntity::subMoveGripPointsAt(gripAppData, offset, bitflags);
+    auto ret = AcDbEntity::subMoveGripPointsAt(gripAppData, offset, bitflags);
+    return ret;
 }
 
 

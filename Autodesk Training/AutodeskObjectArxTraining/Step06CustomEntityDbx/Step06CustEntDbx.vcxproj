@@ -84,6 +84,7 @@
     </ClCompile>
     <ClCompile Include="Step06CustEntDbx.cpp" />
     <ClCompile Include="utc_customEntityStep6.cpp" />
+    <ClCompile Include="utc_DbGripData.cpp" />
     <ClCompile Include="utc_Smiley.cpp" />
     <ClCompile Include="utc_SmileyIO.cpp" />
     <ClCompile Include="utc_SmileyOther.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="utc_customEntityStep6.h" />
+    <ClInclude Include="utc_DbGripData.h" />
     <ClInclude Include="utc_Smiley.h" />
     <ClInclude Include="utc_TriangleGripData.h" />
   </ItemGroup>

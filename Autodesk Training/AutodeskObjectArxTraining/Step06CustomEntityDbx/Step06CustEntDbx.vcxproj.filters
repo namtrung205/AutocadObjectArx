@@ -25,6 +25,9 @@
     <Filter Include="Source Files\GripData">
       <UniqueIdentifier>{f147f1e2-1916-4216-8d27-61521742d1c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AdskTree">
+      <UniqueIdentifier>{6e6ba676-5bff-4ec5-9c60-26368336b61a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="AdskTree.cpp">
       <Filter>Source Files\GripData</Filter>
     </ClCompile>
+    <ClCompile Include="utc_DbGripData.cpp">
+      <Filter>Source Files\GripData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -78,6 +84,9 @@
       <Filter>Header Files\GripData</Filter>
     </ClInclude>
     <ClInclude Include="AdskTree.h">
+      <Filter>Header Files\AdskTree</Filter>
+    </ClInclude>
+    <ClInclude Include="utc_DbGripData.h">
       <Filter>Header Files\GripData</Filter>
     </ClInclude>
   </ItemGroup>
