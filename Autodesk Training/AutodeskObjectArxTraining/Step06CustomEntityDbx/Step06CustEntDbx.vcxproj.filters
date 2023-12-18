@@ -63,9 +63,6 @@
     <ClCompile Include="AdskTree.cpp">
       <Filter>Source Files\GripData</Filter>
     </ClCompile>
-    <ClCompile Include="utc_DbGripData.cpp">
-      <Filter>Source Files\GripData</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -85,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="AdskTree.h">
       <Filter>Header Files\AdskTree</Filter>
-    </ClInclude>
-    <ClInclude Include="utc_DbGripData.h">
-      <Filter>Header Files\GripData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
