@@ -25,7 +25,7 @@
 //-      but are changed infrequently
 //-----------------------------------------------------------------------------
 #pragma once
-#define STEP06CUSTENTDBX_MODULE
+//#define STEP06CUSTENTDBX_MODULE
 
 /*#ifndef
 #define _ALLOW_RTCc_IN_STL

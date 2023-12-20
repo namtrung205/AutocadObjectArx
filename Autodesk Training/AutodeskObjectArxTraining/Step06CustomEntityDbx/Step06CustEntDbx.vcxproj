@@ -55,7 +55,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(Platform)'=='x64'">_WIN64;_ALLOW_RTCc_IN_STL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseOfMfc)'=='Dynamic'">_AFXEXT;STEP06CUSTENTDBX_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!-- Added to avoid Narrow conversion warnings introduced in VS2015 /Wv:xx[.yy[.zzzzz],  is CL version -->
       <AdditionalOptions>/Wv:17.00.61030 %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -67,7 +67,7 @@
     <Link>
     </Link>
     <Link>
-      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">acgeoment.lib;ac1st24.lib;acdb24.lib;acdbmgd.lib;AcDbPointCloudObj.lib;acge24.lib;AcGeolocationObj.lib;acgiapi.lib;acismobj24.lib;acModelDocObj.lib;AcMPolygonObj.lib;AcSceneOE.lib;axdb.lib;rxapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ac1st24.lib;acad.lib;acapp.lib;acapp_crx.lib;AcCamera.lib;accore.lib;acdb24.lib;acdbmgd.lib;AcDbPointCloudObj.lib;AcDrawBridge.lib;AcFdEval.lib;AcFdUi.lib;acge24.lib;AcGeolocationObj.lib;acgeoment.lib;acgiapi.lib;acismobj24.lib;AcJsCoreStub_crx.lib;acModelDocObj.lib;AcMPolygonObj.lib;AcPal.lib;AcPublish_crx.lib;AcSceneOE.lib;AcTc.lib;AcTcUi.lib;acui24.lib;AdApplicationFrame.lib;adui24.lib;aNav.lib;axdb.lib;rxapi.lib;userdata.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
@@ -78,6 +78,9 @@
   <ItemGroup>
     <ClCompile Include="acrxEntryPoint.cpp" />
     <ClCompile Include="AdskTree.cpp" />
+    <ClCompile Include="ContainerEntity.cpp" />
+    <ClCompile Include="ContainerEntityMultiModesGripPE.cpp" />
+    <ClCompile Include="PolyLineVertexAddJig.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -94,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdskTree.h" />
+    <ClInclude Include="ContainerEntity.h" />
+    <ClInclude Include="ContainerEntityMultiModesGripPE.h" />
+    <ClInclude Include="PolyLineVertexAddJig.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="TreeMultiModesGripPE.h" />

@@ -25,8 +25,23 @@
     <Filter Include="Source Files\GripData">
       <UniqueIdentifier>{f147f1e2-1916-4216-8d27-61521742d1c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\AdskTree">
+    <Filter Include="Source Files\AdskSample">
+      <UniqueIdentifier>{99f18edf-50a9-4af5-a9ce-61a38ce37fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AdskSample\Tree">
+      <UniqueIdentifier>{9ba37a76-f06b-4f50-b23c-8dc2439914b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AdskSample">
+      <UniqueIdentifier>{a4e3db10-7735-4698-95d0-66455f4a9167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AdskSample\Tree">
       <UniqueIdentifier>{6e6ba676-5bff-4ec5-9c60-26368336b61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\AdskSample\GripMultiMode">
+      <UniqueIdentifier>{82cefa68-c7e7-4249-8a22-d8e27cf8df7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AdskSample\GripMultiMode">
+      <UniqueIdentifier>{c0d2f18a-ef86-4adb-8f23-6e1f01abffe7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,10 +76,19 @@
       <Filter>Source Files\GripData</Filter>
     </ClCompile>
     <ClCompile Include="AdskTree.cpp">
-      <Filter>Source Files\GripData</Filter>
+      <Filter>Source Files\AdskSample\Tree</Filter>
     </ClCompile>
     <ClCompile Include="TreeMultiModesGripPE.cpp">
-      <Filter>Source Files\GripData</Filter>
+      <Filter>Source Files\AdskSample\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="PolyLineVertexAddJig.cpp">
+      <Filter>Source Files\AdskSample\GripMultiMode</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerEntity.cpp">
+      <Filter>Source Files\AdskSample\GripMultiMode</Filter>
+    </ClCompile>
+    <ClCompile Include="ContainerEntityMultiModesGripPE.cpp">
+      <Filter>Source Files\AdskSample\GripMultiMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,10 +108,19 @@
       <Filter>Header Files\GripData</Filter>
     </ClInclude>
     <ClInclude Include="AdskTree.h">
-      <Filter>Header Files\AdskTree</Filter>
+      <Filter>Header Files\AdskSample\Tree</Filter>
     </ClInclude>
     <ClInclude Include="TreeMultiModesGripPE.h">
-      <Filter>Header Files\GripData</Filter>
+      <Filter>Header Files\AdskSample\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerEntity.h">
+      <Filter>Header Files\AdskSample\GripMultiMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PolyLineVertexAddJig.h">
+      <Filter>Header Files\AdskSample\GripMultiMode</Filter>
+    </ClInclude>
+    <ClInclude Include="ContainerEntityMultiModesGripPE.h">
+      <Filter>Header Files\AdskSample\GripMultiMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

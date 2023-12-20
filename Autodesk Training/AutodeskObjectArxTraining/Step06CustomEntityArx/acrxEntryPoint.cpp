@@ -28,11 +28,13 @@
 #include "utc_Smiley.h"
 #include "TreeMultiModesGripPE.h"
 #include <AdskTree.h>
-
+#include "ContainerEntity.h"
+#include "ContainerEntityMultiModesGripPE.h"
 
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("utc")
 static AdskTreeMultiModesGripPE* pMyMultiModeGrips = NULL;
+static AdskContainerEntityMultiModesGripPE* pMyMultiModeGrips_2 = NULL;
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
 class CStep06CustEntArxApp : public AcRxArxApp {
@@ -58,6 +60,20 @@ public:
 			AdskTree::desc()->addX(AcDbMultiModesGripPE::desc(), pMyMultiModeGrips);
 		}
 
+
+		//Grip
+		AdskContainerEntityMultiModesGripPE::rxInit();
+		AdskContainerEntity::rxInit();
+		acrxBuildClassHierarchy();
+
+		// TODO: Add your initialization code here
+		if (pMyMultiModeGrips_2 == NULL)
+		{
+			pMyMultiModeGrips_2 = new AdskContainerEntityMultiModesGripPE();
+			AdskContainerEntity::desc()->addX(AcDbMultiModesGripPE::desc(), pMyMultiModeGrips_2);
+		}
+
+
 		return (retCode) ;
 	}
 
@@ -72,6 +88,12 @@ public:
 		{
 			delete pMyMultiModeGrips;
 			pMyMultiModeGrips = NULL;
+		}
+
+		if (pMyMultiModeGrips_2 != NULL)
+		{
+			delete pMyMultiModeGrips_2;
+			pMyMultiModeGrips_2 = NULL;
 		}
 
 		return (retCode) ;
@@ -217,6 +239,35 @@ public:
 
 
 
+	// - AdskMultiModeGripSample.MYPLINE command (do not rename)
+	static void AdskMultiModeGripSampleMYPLINE(void)
+	{
+		AcGePoint3dArray points;
+		for (int i = 0; i < 3; i++)
+		{
+			AcGePoint3d vertexPoint = AcGePoint3d::kOrigin;
+			if (acedGetPoint(NULL, _T("\nPick vertex : "), asDblArray(vertexPoint)) != RTNORM)
+				return;
+			points.append(vertexPoint);
+		}
+
+		int numVerts = points.length();
+
+		AcDbPolyline* pPolyline = new AcDbPolyline(numVerts);
+		pPolyline->setDatabaseDefaults();
+
+		for (int i = 0; i < numVerts; i++)
+		{
+			AcGePoint3d pt(points[i]);
+			pPolyline->addVertexAt(i, AcGePoint2d(pt.x, pt.y));
+		}
+
+		AdskContainerEntity* pContEnt = new AdskContainerEntity();
+		pContEnt->setDatabaseDefaults();
+		pContEnt->m_pPolyline = pPolyline;
+		PostToDb(pContEnt);
+	}
+
 } ;
 
 //-----------------------------------------------------------------------------
@@ -229,3 +280,4 @@ ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, utcMyGroup, _CREATESMILEY, _CRE
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, AdskMultiModeGripSimpleSample, TREE, TREE, ACRX_CMD_TRANSPARENT, NULL)
 ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, AdskMultiModeGripSimpleSample, ModeSwitchCmd, ModeSwitchCmd, ACRX_CMD_TRANSPARENT, NULL)
 
+ACED_ARXCOMMAND_ENTRY_AUTO(CStep06CustEntArxApp, AdskMultiModeGripSample, MYPLINE, MYPLINE, ACRX_CMD_TRANSPARENT, NULL)
