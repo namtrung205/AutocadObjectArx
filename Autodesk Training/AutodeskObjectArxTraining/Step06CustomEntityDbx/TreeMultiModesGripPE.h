@@ -1,6 +1,7 @@
 #pragma once
 
 
+
 #ifdef STEP06CUSTENTDBX_MODULE
 #define DLLIMPEXP __declspec(dllexport)
 #else

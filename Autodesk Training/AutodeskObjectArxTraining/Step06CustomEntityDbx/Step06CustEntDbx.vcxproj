@@ -83,6 +83,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Step06CustEntDbx.cpp" />
+    <ClCompile Include="TreeMultiModesGripPE.cpp" />
     <ClCompile Include="utc_customEntityStep6.cpp" />
     <ClCompile Include="utc_Smiley.cpp" />
     <ClCompile Include="utc_SmileyIO.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="AdskTree.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TreeMultiModesGripPE.h" />
     <ClInclude Include="utc_customEntityStep6.h" />
     <ClInclude Include="utc_Smiley.h" />
     <ClInclude Include="utc_TriangleGripData.h" />

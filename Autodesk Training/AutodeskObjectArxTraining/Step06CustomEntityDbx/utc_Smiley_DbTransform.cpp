@@ -141,22 +141,22 @@ Acad::ErrorStatus utc_Smiley::subGetGripPoints(
 {
     assertReadEnabled();
 
-    //create a new gripPoint
-    AcDbGripData* pGripData = new AcDbGripData();
-    AcGePoint3d cen(center());
-    pGripData->setGripPoint(cen);
+    ////create a new gripPoint
+    //AcDbGripData* pGripData = new AcDbGripData();
+    //AcGePoint3d cen(center());
+    //pGripData->setGripPoint(cen);
 
-    pGripData->setViewportDraw(vpDraw);
-    pGripData->setGizmosEnabled(true);
+    //pGripData->setViewportDraw(vpDraw);
+    //pGripData->setGizmosEnabled(true);
 
 
-    grips.append(pGripData);
+    //grips.append(pGripData);
 
-    //Acad::ErrorStatus ret = AcDbEntity::subGetGripPoints(grips, curViewUnitSize, gripSize, curViewDir, bitflags);
+    Acad::ErrorStatus ret = AcDbEntity::subGetGripPoints(grips, curViewUnitSize, gripSize, curViewDir, bitflags);
 
     //----- This method is never called unless you return eNotImplemented 
     //----- from the new getGripPoints() method below (which is the default implementation)
-    return Acad::ErrorStatus::eOk;
+    return ret;
 }
 
 //==================================================================================================//

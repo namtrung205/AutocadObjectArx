@@ -33,9 +33,6 @@
     <ClCompile Include="Step06CustEntArx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TreeMultiModesGripPE.cpp">
-      <Filter>Source Files\GripData</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -46,9 +43,6 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeMultiModesGripPE.h">
-      <Filter>Header Files\GripData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
