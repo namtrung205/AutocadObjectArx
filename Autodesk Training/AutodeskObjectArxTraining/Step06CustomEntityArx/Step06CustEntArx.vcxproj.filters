@@ -19,6 +19,18 @@
     <Filter Include="Header Files\GripData">
       <UniqueIdentifier>{1ffb080c-3023-4ebb-ad23-c089f835cb3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Wraper">
+      <UniqueIdentifier>{db4b37c8-e737-49fd-a123-03a1bbff1a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Wraper\WraperInterface">
+      <UniqueIdentifier>{98bb8f45-a37a-40a9-9132-2a7fc2dd07d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Wraper">
+      <UniqueIdentifier>{ff38c42b-c308-4723-8f44-a64f130b8029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Wraper\WraperInterface">
+      <UniqueIdentifier>{76aeb91a-af31-4b39-9dda-82e58b458f1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -33,6 +45,9 @@
     <ClCompile Include="Step06CustEntArx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="arx_interface.cpp">
+      <Filter>Source Files\Wraper\WraperInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -43,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="arx_interface.h">
+      <Filter>Header Files\Wraper\WraperInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

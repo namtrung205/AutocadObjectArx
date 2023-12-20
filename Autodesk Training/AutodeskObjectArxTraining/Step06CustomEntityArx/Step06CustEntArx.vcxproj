@@ -68,6 +68,7 @@
     <Link>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">utcStep06CustEntDbx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../OutLibs/$(TargetName).lib</ImportLibrary>
     </Link>
     <Link>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Autodesk Training\AutodeskObjectArxTraining\Step06CustObjDbx\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -80,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="acrxEntryPoint.cpp" />
+    <ClCompile Include="arx_interface.cpp" />
     <ClCompile Include="DocData.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -88,6 +90,7 @@
     <ClCompile Include="Step06CustEntArx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arx_interface.h" />
     <ClInclude Include="DocData.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
