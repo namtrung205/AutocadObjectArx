@@ -230,6 +230,16 @@ void ArxInterface::PlaceSmiley( double faceSize, double eyeSize)
     pSmile->setEyeSize(eyeSize);
 
 
+
+    AcApDocument* pActiveDoc = acDocManager-> mdiActiveDocument();
+    Acad::ErrorStatus es = acDocManager->lockDocument(pActiveDoc /* AcAp::DocLockMode = AcAp::kWrite */);
+
+    if (es != Acad::eOk)
+    {
+        // fail to lock     
+        return;
+    }
+
     //Add entity to model space
     {
         //Check name exists
@@ -240,14 +250,18 @@ void ArxInterface::PlaceSmiley( double faceSize, double eyeSize)
             modelId = acdbSymUtil()->blockModelSpaceId(pDb);
             AcDbBlockTableRecord* pBlockTableRecordModel;
 
-            acdbOpenAcDbObject((AcDbObject*&)pBlockTableRecordModel, modelId, AcDb::kForRead);
+            Acad::ErrorStatus ret = acdbOpenAcDbObject((AcDbObject*&)pBlockTableRecordModel, modelId, AcDb::kForWrite);
 
-            if (pBlockTableRecordModel != NULL)
+            if(ret == Acad::eOk)
             {
-                pBlockTableRecordModel->upgradeOpen();
-                pBlockTableRecordModel->appendAcDbEntity(pSmile);
-                pBlockTableRecordModel->close();
+                if (pBlockTableRecordModel != NULL)
+                {
+                    pBlockTableRecordModel->upgradeOpen();
+                    pBlockTableRecordModel->appendAcDbEntity(pSmile);
+                    pBlockTableRecordModel->close();
+                }
             }
+
         }
 
     }
