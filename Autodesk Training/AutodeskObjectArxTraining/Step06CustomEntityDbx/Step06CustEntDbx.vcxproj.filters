@@ -43,6 +43,12 @@
     <Filter Include="Source Files\AdskSample\GripMultiMode">
       <UniqueIdentifier>{c0d2f18a-ef86-4adb-8f23-6e1f01abffe7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lab06CustomEntity">
+      <UniqueIdentifier>{88e7c4eb-c895-4774-a1c3-472645a24b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lab06CustomEntity">
+      <UniqueIdentifier>{b79fa10d-ff40-479a-97c4-50757b502fef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -52,9 +58,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Step06CustEntDbx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utc_customEntityStep6.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utc_Smiley.cpp">
@@ -90,15 +93,15 @@
     <ClCompile Include="ContainerEntityMultiModesGripPE.cpp">
       <Filter>Source Files\AdskSample\GripMultiMode</Filter>
     </ClCompile>
+    <ClCompile Include="utc_customEntityStep6.cpp">
+      <Filter>Source Files\Lab06CustomEntity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utc_customEntityStep6.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utc_Smiley.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="ContainerEntityMultiModesGripPE.h">
       <Filter>Header Files\AdskSample\GripMultiMode</Filter>
+    </ClInclude>
+    <ClInclude Include="utc_customEntityStep6.h">
+      <Filter>Header Files\Lab06CustomEntity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
