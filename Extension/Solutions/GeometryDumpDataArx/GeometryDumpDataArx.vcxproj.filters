@@ -7,15 +7,57 @@
     <Filter Include="Source">
       <UniqueIdentifier>{63b4ea8f-ab28-4441-be4c-917ec1816448}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Device">
+      <UniqueIdentifier>{3aa6c737-fcc0-4b92-a68d-0c19f909158d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Device">
+      <UniqueIdentifier>{c9b8c41e-c608-4af5-a709-5c918069fa8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\GiWorldDraw">
+      <UniqueIdentifier>{b385f150-3891-41cb-830b-5424e0b6d666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GiWorldDraw">
+      <UniqueIdentifier>{e8010ffb-e6b0-488a-a66e-0bdf1e09c973}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\stdafx.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcSimpleDevice.h">
+      <Filter>Header\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiSubEntityTraits.h">
+      <Filter>Header\GiWorldDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.h">
+      <Filter>Header\GiWorldDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldGeometry.h">
+      <Filter>Header\GiWorldDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.h">
+      <Filter>Header\GiWorldDraw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\acrxEntryPoint.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.cpp">
+      <Filter>Source\GiWorldDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcSimpleDevice.cpp">
+      <Filter>Source\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiSubEntityTraits.cpp">
+      <Filter>Source\GiWorldDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldGeometry.cpp">
+      <Filter>Source\GiWorldDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.cpp">
+      <Filter>Source\GiWorldDraw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

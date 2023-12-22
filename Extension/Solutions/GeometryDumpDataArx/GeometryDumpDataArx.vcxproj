@@ -20,9 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\acrxEntryPoint.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcSimpleDevice.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiSubEntityTraits.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldGeometry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\stdafx.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcSimpleDevice.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiSubEntityTraits.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldGeometry.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ArxProject.def" />
@@ -131,12 +141,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Github\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\inc;D:\Github\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc;..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc-x64;D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Extension\Source\GeometryDumpData\GeometryDumpDataArx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Github\AutocadObjectArx\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\Libs\Autocad SDK\ObjectArx 2021\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>rxapi.lib;acdb24.lib;acge24.lib;acad.lib;ac1st24.lib;accore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>ArxProject.def</ModuleDefinitionFile>
     </Link>
