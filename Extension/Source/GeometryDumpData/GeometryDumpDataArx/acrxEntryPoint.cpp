@@ -5,6 +5,15 @@
 
 #include "UtcGiWorldDraw.h"
 
+
+
+#include "DemoGLTF/CreateTriangleMesh.h"
+
+
+
+
+
+
 //-----------------------------------------------------------------------------
 #define szRDS _RXST("UTC")
 //-----------------------------------------------------------------------------
@@ -113,6 +122,10 @@ public:
 
         delete pIterator;
         pModelSpace->close();
+
+        fs::path path = "D:\\abc.glb";
+        Demo::SerializeTriangle(path);
+
     }
 
 };

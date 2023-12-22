@@ -1,11 +1,16 @@
+#include "stdafx.h"
 #include "UtcGiWorldGeometry.h"
+#include "UtilsString.h"
 
-void UtcGiWorldGeometry::getModelToWorldTransform(AcGeMatrix3d&) const
+void UtcGiWorldGeometry::getModelToWorldTransform(AcGeMatrix3d& retMat) const
 {
+    retMat = AcGeMatrix3d();
+
 }
 
-void UtcGiWorldGeometry::getWorldToModelTransform(AcGeMatrix3d&) const
+void UtcGiWorldGeometry::getWorldToModelTransform(AcGeMatrix3d& retMat) const
 {
+    retMat = AcGeMatrix3d();
 }
 
 Adesk::Boolean UtcGiWorldGeometry::pushModelTransform(const AcGeVector3d& vNormal)
@@ -100,6 +105,23 @@ Adesk::Boolean UtcGiWorldGeometry::mesh(const Adesk::UInt32 rows, const Adesk::U
 
 Adesk::Boolean UtcGiWorldGeometry::shell(const Adesk::UInt32 nbVertex, const AcGePoint3d* pVertexList, const Adesk::UInt32 faceListSize, const Adesk::Int32* pFaceList, const AcGiEdgeData* pEdgeData = NULL, const AcGiFaceData* pFaceData = NULL, const AcGiVertexData* pVertexData = NULL, const resbuf* pResBuf = NULL, const bool bAutoGenerateNormals = true) const
 {
+    //float* point_data;
+
+    acutPrintf(_T("Shell Invoke: \n"));
+
+    for (unsigned int i = 0; i < nbVertex; ++i)
+    {
+        AcGePoint3d v = pVertexList[i];
+        AcString pointString;
+
+        Utils::String::PointToString(v, pointString);
+        
+        acutPrintf(pointString.constPtr());
+        acutPrintf(_T("\n"));
+
+    }
+
+
     return Adesk::Boolean();
 }
 

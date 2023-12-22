@@ -19,6 +19,18 @@
     <Filter Include="Source\GiWorldDraw">
       <UniqueIdentifier>{e8010ffb-e6b0-488a-a66e-0bdf1e09c973}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Utils">
+      <UniqueIdentifier>{db7549e6-c088-418c-8e39-f8a029a64de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Utils">
+      <UniqueIdentifier>{39bbc108-7cad-4b6f-978f-fe9940db78ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Serialize">
+      <UniqueIdentifier>{a1c5294e-b46e-4fe6-93d1-c1338a3d3806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Serialize">
+      <UniqueIdentifier>{36cc1768-6e27-4fd3-9788-0d962b1fb8db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\stdafx.h">
@@ -39,6 +51,12 @@
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.h">
       <Filter>Header\GiWorldDraw</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtilsString.h">
+      <Filter>Header\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.h">
+      <Filter>Header\Serialize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\acrxEntryPoint.cpp">
@@ -58,6 +76,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.cpp">
       <Filter>Source\GiWorldDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtilsString.cpp">
+      <Filter>Source\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.cpp">
+      <Filter>Source\Serialize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

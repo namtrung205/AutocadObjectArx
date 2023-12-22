@@ -36,7 +36,7 @@
 #pragma pack(push, 8)
 #pragma warning(disable : 4786 4996)
 //#pragma warning(disable: 4098)
-
+#define NOMINMAX 1
 //-----------------------------------------------------------------------------
 #include <windows.h>
 
@@ -57,3 +57,18 @@
 
 
 #include "tchar.h" 
+
+#if __EMSCRIPTEN__
+#include <filesystem>
+namespace fs = std::__fs::filesystem;
+#else
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || __cplusplus >= 201703L)
+#include <filesystem>
+namespace fs = std::filesystem;
+#elif ((defined(_MSVC_LANG) && _MSVC_LANG >= 201402L) || __cplusplus >= 201402L)
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+#else
+#error "Unsupported C++ standard"
+#endif
+#endif
