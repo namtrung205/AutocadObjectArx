@@ -11,15 +11,18 @@ private:
 	AcGiRegenType m_regenType;
 	UtcGiContext* m_pContext;
 
+	//Exporter
+	MrGltfExporter* m_pGltfExporter;
 
 public:
 	UtcGiWorldDraw();
+
+	UtcGiWorldDraw(MrGltfExporter* pGltfExporter);
 
 	~UtcGiWorldDraw()
 	{
 
 	}
-
 
 	// Inherited via AcGiWorldDraw
 	virtual AcGiRegenType regenType() const override;
@@ -31,6 +34,17 @@ public:
 	virtual Adesk::UInt32 numberOfIsolines() const override;
 	virtual AcGiContext* context() override;
 	virtual AcGiWorldGeometry& geometry() const override;
+
+
+public:
+	void SetGltfExporter(MrGltfExporter* pGltfExporter)
+	{
+		m_pGltfExporter = pGltfExporter;
+		if(m_pGeom!=nullptr)
+		{
+			m_pGeom->SetGltfExporter(m_pGltfExporter);
+		}
+	}
 
 };
 

@@ -6,7 +6,16 @@
 UtcGiWorldDraw::UtcGiWorldDraw()
 {
     m_pTraits = new UtcGiSubEntityTraits();
-    m_pGeom = new UtcGiWorldGeometry();
+    m_pGeom = new UtcGiWorldGeometry(m_pGltfExporter);
+    m_pContext = new UtcGiContext();
+}
+
+UtcGiWorldDraw::UtcGiWorldDraw(MrGltfExporter* pGltfExporter)
+{
+    m_pGltfExporter = pGltfExporter;
+
+    m_pTraits = new UtcGiSubEntityTraits();
+    m_pGeom = new UtcGiWorldGeometry(m_pGltfExporter);
     m_pContext = new UtcGiContext();
 }
 

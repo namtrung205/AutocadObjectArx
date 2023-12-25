@@ -31,6 +31,9 @@
     <Filter Include="Header\Serialize">
       <UniqueIdentifier>{36cc1768-6e27-4fd3-9788-0d962b1fb8db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\MrDwgGltfHolder">
+      <UniqueIdentifier>{532f1a47-1d3d-4704-8550-86f8823ccfe9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\stdafx.h">
@@ -54,8 +57,8 @@
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtilsString.h">
       <Filter>Header\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.h">
-      <Filter>Header\Serialize</Filter>
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\MrGltfExporter.h">
+      <Filter>Source\MrDwgGltfHolder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,8 +83,8 @@
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtilsString.cpp">
       <Filter>Source\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.cpp">
-      <Filter>Source\Serialize</Filter>
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\MrGltfExporter.cpp">
+      <Filter>Source\MrDwgGltfHolder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

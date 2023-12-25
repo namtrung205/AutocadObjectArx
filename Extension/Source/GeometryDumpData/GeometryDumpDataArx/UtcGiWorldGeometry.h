@@ -1,19 +1,32 @@
 #pragma once
 #include "acgi.h"
+#include "DemoGLTF/MrGltfExporter.h"
 
 class UtcGiWorldGeometry: public AcGiWorldGeometry
 {
 
-public:
-	UtcGiWorldGeometry()
-	{
+private:
+	MrGltfExporter* m_pGltfExporter;
 
+
+public:
+	UtcGiWorldGeometry(MrGltfExporter* pGltfExporter)
+	{
+		m_pGltfExporter = pGltfExporter;
 	}
 
 	~UtcGiWorldGeometry()
 	{
 
 	}
+
+public:
+	void SetGltfExporter(MrGltfExporter* pGltfExporter)
+	{
+		m_pGltfExporter = pGltfExporter;
+	}
+
+
 
 public:
 	// Inherited via AcGiWorldGeometry

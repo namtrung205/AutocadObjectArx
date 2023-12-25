@@ -121,6 +121,15 @@ Adesk::Boolean UtcGiWorldGeometry::shell(const Adesk::UInt32 nbVertex, const AcG
 
     }
 
+    std::string accessorIdIndices;
+    std::string accessorIdPositions;
+
+    m_pGltfExporter->CreateTriangleResources(accessorIdIndices, accessorIdPositions, nbVertex, pVertexList, faceListSize, pFaceList, pEdgeData, pFaceData, pVertexData, pResBuf, bAutoGenerateNormals);
+    m_pGltfExporter->CreateTriangleEntities(accessorIdIndices, accessorIdPositions);
+
+
+
+
 
     return Adesk::Boolean();
 }

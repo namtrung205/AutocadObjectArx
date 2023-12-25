@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\acrxEntryPoint.cpp" />
-    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.cpp" />
+    <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\MrGltfExporter.cpp" />
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.cpp" />
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.cpp" />
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcSimpleDevice.cpp" />
@@ -29,7 +29,7 @@
     <ClCompile Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtilsString.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\CreateTriangleMesh.h" />
+    <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\DemoGLTF\MrGltfExporter.h" />
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\stdafx.h" />
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiContext.h" />
     <ClInclude Include="..\..\Source\GeometryDumpData\GeometryDumpDataArx\UtcGiWorldDraw.h" />
