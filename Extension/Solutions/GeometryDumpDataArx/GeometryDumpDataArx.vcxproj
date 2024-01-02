@@ -145,7 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc;..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc-x64;D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Extension\Source\GeometryDumpData\GeometryDumpDataArx;D:\PRIVATE\GitHub\Autocad Object ARX\AutocadObjectArx\Libs\GLTFSDK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc;..\..\..\Libs\Autocad SDK\ObjectArx 2021\inc-x64;..\..\Source\GeometryDumpData\GeometryDumpDataArx;..\..\..\Libs\GLTFSDK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
