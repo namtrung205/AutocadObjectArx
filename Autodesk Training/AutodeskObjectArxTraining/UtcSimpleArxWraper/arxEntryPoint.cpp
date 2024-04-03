@@ -31,10 +31,10 @@
 
 //-----------------------------------------------------------------------------
 //----- ObjectARX EntryPoint
-class VithepTowerArxWrapperApp : public AcRxArxApp {
+class UtcArxWrapperApp : public AcRxArxApp {
 
 public:
-	VithepTowerArxWrapperApp() : AcRxArxApp() {}
+	UtcArxWrapperApp() : AcRxArxApp() {}
 
 	virtual AcRx::AppRetCode On_kInitAppMsg(void* pkt) {
 		// TODO: Load dependencies here
@@ -75,5 +75,5 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-IMPLEMENT_ARX_ENTRYPOINT(VithepTowerArxWrapperApp)
+IMPLEMENT_ARX_ENTRYPOINT(UtcArxWrapperApp)
 
